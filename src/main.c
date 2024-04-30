@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <../header/main.h>
+#include <../header/compresor_struct.h>
 
 
 //How to compile ? write "make clean ; make" . Later enter to /bin folder and play
 int main()
 {
-    print_head_info();    
+    print_head_info();
+    char *compress_text = "ABRA_CADABRA_PATA_DE_CABRA";
+    printf("A COMPRIMIR: %s\n",compress_text);
+
+
     return 0;
 }
 
