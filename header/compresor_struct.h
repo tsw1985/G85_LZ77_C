@@ -9,7 +9,7 @@ typedef struct info_tuple
 //list of tuples
 typedef struct info_tuple_array
 {
-    struct_info_tuple tuple_list;
+    struct_info_tuple *tuple_list;
     long size;
 };
 
