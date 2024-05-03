@@ -1,16 +1,14 @@
 //Struct tuple
-typedef struct info_tuple
+typedef struct
 {
     int go_back_positions;
     int get_chars;
     char next_char;   
-} struct_info_tuple;
+} tuple;
 
 //list of tuples
-typedef struct info_tuple_array
-{
-    struct_info_tuple *tuple_list;
+typedef struct 
+ {
+    tuple *tuple_list;
     long size;
-};
-
- 
+} tuple_array;

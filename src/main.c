@@ -1,17 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <../header/main.h>
-#include <../header/compresor_struct.h>
+#include "../header/main.h"
+//#include "../header/compresor_struct.h"
+#include "../header/compress.h"
 
 
 //How to compile ? write "make clean ; make" . Later enter to /bin folder and play
 int main()
 {
-    print_head_info();
-    char *compress_text = "ABRA_CADABRA_PATA_DE_CABRA";
+    //print_head_info();
+    char *compress_text = "ABRACADABRADEPATADECABRA";
     printf("A COMPRIMIR: %s\n",compress_text);
 
 
+    tuple_array *_info_tuples_array = compress_data(compress_text);
+    //if(_info_tuples_array != NULL){
+
+    //}
+
+
+
+    
+
+    //free(_info_tuples_array->tuple_list);
     return 0;
 }
 
