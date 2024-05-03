@@ -9,7 +9,7 @@
 int main()
 {
     //print_head_info();
-    char *compress_text = "ABRACADABRADEPATADECABRA";
+    char *compress_text = "ABRACADABRADEPATADECABRAPATADECABRAABRACADABRA";
     printf("A COMPRIMIR: %s\n",compress_text);
 
 
@@ -22,7 +22,8 @@ int main()
 
     
 
-    //free(_info_tuples_array->tuple_list);
+    free(_info_tuples_array->tuple_list);
+    free(_info_tuples_array);
     return 0;
 }
 

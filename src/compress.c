@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 //GET A LIST OF TUPLES
 tuple_array *compress_data(char *buffer){
 
@@ -15,10 +14,10 @@ tuple_array *compress_data(char *buffer){
     tuple_array *_tuple_array = (tuple_array*)malloc(sizeof(tuple_array));
     _tuple_array->tuple_list = tuples;
 
-    //char searching[4];
-    //char next_search[4];
-    for(int i=0 ; i < strlen(buffer) ; i ++){
-        printf("LETRA --> %c\n",buffer[i]);
+    char searching[4];
+    char next_search[4];
+    for(int buffer_index =0 ; buffer_index < strlen(buffer) ; buffer_index ++){
+        printf("LETRA -->[%d] - %c\n",buffer_index,buffer[buffer_index]);
     }
 
 
@@ -26,3 +25,4 @@ tuple_array *compress_data(char *buffer){
 
     return _tuple_array;
 }
+
