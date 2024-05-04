@@ -9,11 +9,26 @@
 int main()
 {
     //print_head_info();
-    char *compress_text = "ABRACADABRADEPATADECABRAPATADECABRAABRACADABRA";
+    char *compress_text = "ABRACADABRA";
     printf("A COMPRIMIR: %s\n",compress_text);
 
+    tuple_array *_tuples_array;
+    _tuples_array = create_tuple_array();
 
-    tuple_array *_info_tuples_array = compress_data(compress_text);
+    add_firts_tuple_on_list(_tuples_array,compress_text[0]);
+
+
+    if(is_tuple_list_empty(_tuples_array) == 0){
+        printf("LISTA DE TUPLAS VACIA\n");
+        
+        
+
+    }else{
+        printf("LISTA DE TUPLAS LLENA\n");
+        show_tuples_list(_tuples_array);
+    }
+
+    //_info_tuples_array = compress_data(compress_text);
     //if(_info_tuples_array != NULL){
 
     //}
@@ -22,8 +37,8 @@ int main()
 
     
 
-    free(_info_tuples_array->tuple_list);
-    free(_info_tuples_array);
+    free(_tuples_array->tuple_list);
+    free(_tuples_array);
     return 0;
 }
 

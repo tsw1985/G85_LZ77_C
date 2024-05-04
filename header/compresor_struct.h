@@ -2,7 +2,7 @@
 typedef struct
 {
     int go_back_positions;
-    int get_chars;
+    int get_number_chars;
     char next_char;   
 } tuple;
 
