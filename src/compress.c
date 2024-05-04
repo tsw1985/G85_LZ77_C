@@ -45,17 +45,46 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
     char searching[4];
     //char next_search[4];
     for(int buffer_index = 0 ; buffer_index < strlen(buffer) ; buffer_index ++){
+
         char _buffer_item = buffer[buffer_index];
         if(_buffer_item != '\0'){
-            //printf("1-BUFFER ITEM %c\n",_buffer_item);
 
             int char_is_on_tuple_index = is_char_in_tuples_list(_buffer_item,_tuple_array);
             if(char_is_on_tuple_index != -1){
-                printf("EL ELEMENTO EXISTE EN POSICION [%d]\n",char_is_on_tuple_index);
+
+                //printf("EL ELEMENTO EXISTE EN POSICION [%d]\n",char_is_on_tuple_index);
+                
+                
+            }else{
+                _tuple_array = add_tuple_on_list(0,0,buffer[_buffer_item],_tuple_array);
             }
+        
         }
     }
     return _tuple_array;
+}
+
+tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , int _next_char , tuple_array *_tuple_array){
+    
+    _tuple_array->size = _tuple_array->size +1;
+    printf("ARRAY LENGTH %d\n",_tuple_array->size);
+    _tuple_array->tuple_list = (tuple*)realloc(_tuple_array->tuple_list , (_tuple_array->size) * sizeof(tuple));
+    
+
+    tuple tuple_item;
+    tuple_item.get_number_chars = 0;
+    tuple_item.go_back_positions = 0;
+    tuple_item.next_char = _next_char;
+
+    _tuple_array->tuple_list[_tuple_array->size -1] = tuple_item;
+
+
+
+    //show_tuples_list(_tuple_array);
+
+
+    return _tuple_array;
+
 }
 
 
@@ -84,9 +113,7 @@ int is_tuple_list_empty(tuple_array *_tuple_array){
 }
 
 
-int add_tuple_on_list(int go_back_positions, int get_number_chars , int next_char){
-    return 0;
-}
+
 
 void show_tuples_list(tuple_array *_tuples_array){
     for(int i = 0; i < _tuples_array->size ; i++){

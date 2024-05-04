@@ -9,17 +9,18 @@
 int main()
 {
     //print_head_info();
-    char *buffer_data = "AABRACADABRA";
+    char *buffer_data = "ABRACADABRA";
     printf("A COMPRIMIR: %s\n",buffer_data);
 
     tuple_array *_tuples_array;
     _tuples_array = create_tuple_array();
 
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
-    show_tuples_list(_tuples_array);
-
     compress_data(_tuples_array , buffer_data);
 
+
+
+    //show_tuples_list(_tuples_array);
 
     //_info_tuples_array = compress_data(compress_text);
     //if(_info_tuples_array != NULL){
