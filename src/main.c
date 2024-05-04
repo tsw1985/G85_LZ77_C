@@ -9,24 +9,17 @@
 int main()
 {
     //print_head_info();
-    char *compress_text = "ABRACADABRA";
-    printf("A COMPRIMIR: %s\n",compress_text);
+    char *buffer_data = "AABRACADABRA";
+    printf("A COMPRIMIR: %s\n",buffer_data);
 
     tuple_array *_tuples_array;
     _tuples_array = create_tuple_array();
 
-    add_firts_tuple_on_list(_tuples_array,compress_text[0]);
+    add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
+    show_tuples_list(_tuples_array);
 
+    compress_data(_tuples_array , buffer_data);
 
-    if(is_tuple_list_empty(_tuples_array) == 0){
-        printf("LISTA DE TUPLAS VACIA\n");
-        
-        
-
-    }else{
-        printf("LISTA DE TUPLAS LLENA\n");
-        show_tuples_list(_tuples_array);
-    }
 
     //_info_tuples_array = compress_data(compress_text);
     //if(_info_tuples_array != NULL){
