@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../header/main.h"
 //#include "../header/compresor_struct.h"
 #include "../header/compress.h"
@@ -10,7 +11,8 @@ int main()
 {
     //print_head_info();
     char *buffer_data = "ABRACADABRA";
-    printf("A COMPRIMIR: %s\n",buffer_data);
+    printf("A COMPRIMIR: [%s] LONGITUD: [%d]: \n",buffer_data,(int)strlen(buffer_data));
+    printf("---------------------------------------------------------------------\n");
 
     tuple_array *_tuples_array;
     _tuples_array = create_tuple_array();
@@ -18,9 +20,7 @@ int main()
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
     compress_data(_tuples_array , buffer_data);
 
-
-
-    //show_tuples_list(_tuples_array);
+    show_tuples_list(_tuples_array);
 
     //_info_tuples_array = compress_data(compress_text);
     //if(_info_tuples_array != NULL){

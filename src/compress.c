@@ -40,23 +40,19 @@ tuple_array *add_firts_element_on_tuple_list(tuple_array *_tuples_array , char _
 tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
 
     int window_length = 4;
-
-
     char searching[4];
     //char next_search[4];
+    
     for(int buffer_index = 0 ; buffer_index < strlen(buffer) ; buffer_index ++){
 
-        char _buffer_item = buffer[buffer_index];
-        if(_buffer_item != '\0'){
+        char _current_buffer_item = buffer[buffer_index];
+        if(_current_buffer_item != '\0'){
 
-            int char_is_on_tuple_index = is_char_in_tuples_list(_buffer_item,_tuple_array);
+            int char_is_on_tuple_index = is_char_in_tuples_list(_current_buffer_item,_tuple_array);
             if(char_is_on_tuple_index != -1){
-
-                //printf("EL ELEMENTO EXISTE EN POSICION [%d]\n",char_is_on_tuple_index);
-                
-                
+                _tuple_array = add_tuple_on_list(0,0,buffer[buffer_index+1],_tuple_array);
             }else{
-                _tuple_array = add_tuple_on_list(0,0,buffer[_buffer_item],_tuple_array);
+                _tuple_array = add_tuple_on_list(0,0,_current_buffer_item,_tuple_array);
             }
         
         }
@@ -64,27 +60,17 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
     return _tuple_array;
 }
 
-tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , int _next_char , tuple_array *_tuple_array){
-    
+tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , char _next_char , tuple_array *_tuple_array){
     _tuple_array->size = _tuple_array->size +1;
-    printf("ARRAY LENGTH %d\n",_tuple_array->size);
     _tuple_array->tuple_list = (tuple*)realloc(_tuple_array->tuple_list , (_tuple_array->size) * sizeof(tuple));
     
-
     tuple tuple_item;
     tuple_item.get_number_chars = 0;
     tuple_item.go_back_positions = 0;
     tuple_item.next_char = _next_char;
 
     _tuple_array->tuple_list[_tuple_array->size -1] = tuple_item;
-
-
-
-    //show_tuples_list(_tuple_array);
-
-
     return _tuple_array;
-
 }
 
 
