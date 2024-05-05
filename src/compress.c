@@ -46,22 +46,17 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
     for(int buffer_index = 1 ; buffer_index < strlen(buffer) ; buffer_index ++){
 
         char _current_buffer_item = buffer[buffer_index];
-        char _next_to_current_buffer_item = buffer[buffer_index+1];
+        char _next_to_current_buffer_item = buffer[buffer_index];
         if(_next_to_current_buffer_item != '\0'){
 
             int char_is_on_tuple_index = is_char_in_tuples_list(_current_buffer_item , _tuple_array);
             if(char_is_on_tuple_index != -1){ // EXISTS
 
-                //typedef struct
-                //{
-                //    int go_back_positions;
-                //    int get_number_chars;
-                //    char next_char;   
-                //} tuple;
-                
-                _tuple_array = add_tuple_on_list(char_is_on_tuple_index,0,_next_to_current_buffer_item,_tuple_array);
                 buffer_index++;
-                printf("LETRA [%c] SI existe en posicion [%d]\n",_next_to_current_buffer_item,char_is_on_tuple_index);
+                char next_next_char = buffer[buffer_index];
+                _tuple_array = add_tuple_on_list(char_is_on_tuple_index, 0, next_next_char, _tuple_array);
+                
+                printf("LETRA [%c] SI existe en posicion [%d]\n",_current_buffer_item,char_is_on_tuple_index);
 
             }else{ //NOT EXISTS
                 printf("LETRA [%c] NO EXISTE - La ponemos\n",_current_buffer_item);
