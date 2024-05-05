@@ -9,7 +9,7 @@
 int main()
 {
     //print_head_info();
-    char *buffer_data = "AABRACADABRA";
+    char *buffer_data = "ABRACADABRA";
     printf("A COMPRIMIR: [%s] LONGITUD: [%d]: \n",buffer_data,(int)strlen(buffer_data));
     printf("---------------------------------------------------------------------\n");
 
@@ -17,7 +17,7 @@ int main()
     _tuples_array = create_tuple_array();
 
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
-    printf("AÑADIDO PRIMERA LETRA %c",buffer_data[0]);
+    printf("PRIMERA LETRA [%c] NO EXISTE - La ponemos\n",buffer_data[0]);
     compress_data(_tuples_array , buffer_data);
 
     //show_tuples_list(_tuples_array);

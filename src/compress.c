@@ -43,13 +43,13 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
     char searching[4];
     //char next_search[4];
 
-    for(int buffer_index = 0 ; buffer_index < strlen(buffer) ; buffer_index ++){
+    for(int buffer_index = 1 ; buffer_index < strlen(buffer) ; buffer_index ++){
 
         char _current_buffer_item = buffer[buffer_index];
         char _next_to_current_buffer_item = buffer[buffer_index+1];
-        if(_current_buffer_item != '\0'){
+        if(_next_to_current_buffer_item != '\0'){
 
-            int char_is_on_tuple_index = is_char_in_tuples_list(_next_to_current_buffer_item , _tuple_array);
+            int char_is_on_tuple_index = is_char_in_tuples_list(_current_buffer_item , _tuple_array);
             if(char_is_on_tuple_index != -1){ // EXISTS
 
                 //typedef struct
@@ -60,15 +60,18 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
                 //} tuple;
                 
                 _tuple_array = add_tuple_on_list(char_is_on_tuple_index,0,_next_to_current_buffer_item,_tuple_array);
-                printf("LETRA [%c] SI existe en posicion [%d] !\n",_next_to_current_buffer_item,char_is_on_tuple_index);
+                buffer_index++;
+                printf("LETRA [%c] SI existe en posicion [%d]\n",_next_to_current_buffer_item,char_is_on_tuple_index);
 
             }else{ //NOT EXISTS
-                //printf("NO EXISTE LETRA %c\n",_current_buffer_item);
-                printf("LETRA %c NO EXISTE - La ponemos\n",_next_to_current_buffer_item);
+                printf("LETRA [%c] NO EXISTE - La ponemos\n",_current_buffer_item);
                 _tuple_array = add_tuple_on_list(0,0,_current_buffer_item,_tuple_array);
             }
         
         }
+
+        show_tuples_list(_tuple_array);
+
     }
     return _tuple_array;
 }
@@ -90,7 +93,6 @@ tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , c
 int is_char_in_tuples_list(char _char , tuple_array *_tuple_array){
 
     int exists_on_index = -1;
-    printf("---------------------\n");
     for(int i = _tuple_array->size-1 ; i >= 0 ; i--){
         tuple _tuple_item = _tuple_array->tuple_list[i];
         if(_tuple_item.next_char == _char){
