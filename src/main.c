@@ -20,7 +20,7 @@ int main()
     printf("PRIMERA LETRA [%c] NO EXISTE - La ponemos\n",buffer_data[0]);
     compress_data(_tuples_array , buffer_data);
 
-    //show_tuples_list(_tuples_array);
+    show_tuples_list(_tuples_array);
 
     //_info_tuples_array = compress_data(compress_text);
     //if(_info_tuples_array != NULL){

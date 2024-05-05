@@ -41,34 +41,50 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
 
     int window_length = 4;
     char searching[4];
-    //char next_search[4];
+    char current_chars_readed[(int)strlen(buffer)];
+    memset(current_chars_readed,' ',(int)strlen(buffer));
+    current_chars_readed[(int)strlen(buffer)+1] = '\0';
+    
+    //show_current_chars_readed(current_chars_readed);
 
-    for(int buffer_index = 1 ; buffer_index < strlen(buffer) ; buffer_index ++){
+    for(int buffer_index = 0 ; buffer_index < strlen(buffer) ; buffer_index ++){
 
-        char _current_buffer_item = buffer[buffer_index];
-        char _next_to_current_buffer_item = buffer[buffer_index];
-        if(_next_to_current_buffer_item != '\0'){
+        char current_char = buffer[buffer_index];
+        char next_char = buffer[buffer_index+1];
+        current_chars_readed[buffer_index] = current_char;
+        printf("CURRENT CHAR [%c] - NEXT CHAR [%c] y BUFFER CHAR [%c]\n",current_char,next_char,current_chars_readed[buffer_index]);
+        
+        if(next_char != '\0'){
 
-            int char_is_on_tuple_index = is_char_in_tuples_list(_current_buffer_item , _tuple_array);
+            /*int char_is_on_tuple_index = is_char_in_tuples_list(_current_buffer_item , _tuple_array);
             if(char_is_on_tuple_index != -1){ // EXISTS
 
                 buffer_index++;
                 char next_next_char = buffer[buffer_index];
-                _tuple_array = add_tuple_on_list(char_is_on_tuple_index, 0, next_next_char, _tuple_array);
+                _tuple_array = add_tuple_on_list(char_is_on_tuple_index, 1, next_next_char, _tuple_array);
                 
                 printf("LETRA [%c] SI existe en posicion [%d]\n",_current_buffer_item,char_is_on_tuple_index);
 
             }else{ //NOT EXISTS
                 printf("LETRA [%c] NO EXISTE - La ponemos\n",_current_buffer_item);
+                current_chars_readed[buffer_index] = _current_buffer_item;
                 _tuple_array = add_tuple_on_list(0,0,_current_buffer_item,_tuple_array);
-            }
+            }*/
         
         }
 
-        show_tuples_list(_tuple_array);
+        //show_tuples_list(_tuple_array);
 
     }
+
+
     return _tuple_array;
+}
+
+void show_current_chars_readed(char current_chars_readed[]){
+    for( int i = 0 ; i < (int)strlen(current_chars_readed) ; i++){
+        printf("CHARS [%d] READED [%c]\n" ,i, current_chars_readed[i]);
+    }
 }
 
 tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , char _next_char , tuple_array *_tuple_array){
