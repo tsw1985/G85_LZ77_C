@@ -142,15 +142,42 @@ void show_tuples_list(tuple_array *_tuples_array){
 }
 
 
-char *descompress(tuple_array *_tuple_array){
+char *descompress(tuple_array *_tuple_array , int buffer_data_length){
     int size_list = _tuple_array->size;
     //char data_unziped[size_list];
     char *data_unziped;
+    memset(data_unziped,' ',buffer_data_length);
+    //data_unziped[buffer_data_length] + 1 = '\0';
+
     for(int i = 0; i < _tuple_array->size ; i++){
+
         tuple tuple_item = _tuple_array->tuple_list[i];
+
         if(tuple_item.go_back_positions == 0){
+            printf("CHAR RAW %c\n",tuple_item.next_char);
             data_unziped[i] = tuple_item.next_char;
+        }else{
+            char next_char = tuple_item.next_char;
+            char picked_char = get_char_from_data_unziped(data_unziped,tuple_item.go_back_positions);
+            //printf("IR %d pasos para pillar la letra %c\n",picked_char);
+            //data_unziped[i] = picked_char;
+            data_unziped[i+1] = next_char;
+
         }
     }
     return data_unziped;
+}
+
+char get_char_from_data_unziped(char *data_unziped, int go_back_positions){
+
+    char picked_char = '\0';
+    int counter = 0;
+    for(int i = (int)strlen(data_unziped) - 1 ; i >= 0 ; i--){
+        if(counter==go_back_positions){
+            picked_char = data_unziped[i];
+            break;
+        }
+        counter++;
+    }
+    return picked_char;
 }

@@ -25,7 +25,7 @@ int main()
     //memset(data_unzip,' ',(int)strlen(buffer_data));
     //data_unzip[(int)strlen(buffer_data)+1] = '\0';
     char *data_unzip;
-    data_unzip = descompress(_tuples_array);
+    data_unzip = descompress(_tuples_array , strlen(buffer_data));
     printf("UNZIPED : [%s]\n",data_unzip);
 
     //_info_tuples_array = compress_data(compress_text);
