@@ -44,13 +44,14 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
     char current_chars_readed[(int)strlen(buffer)];
     memset(current_chars_readed,' ',(int)strlen(buffer));
     current_chars_readed[(int)strlen(buffer)+1] = '\0';
+    current_chars_readed[0] = buffer[0];
     
     //show_current_chars_readed(current_chars_readed);
 
     for(int buffer_index = 0 ; buffer_index < strlen(buffer) ; buffer_index ++){
 
         char current_char = buffer[buffer_index];
-        char next_char = buffer[buffer_index+1];
+        char next_char = buffer[buffer_index + 1];
         //add current char to readed chars list
         current_chars_readed[buffer_index] = current_char;
         //printf("CURRENT CHAR [%c] - NEXT CHAR [%c] y BUFFER CHAR [%c]\n",current_char,next_char,current_chars_readed[buffer_index]);
@@ -60,12 +61,14 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
             int position_existing_char = get_position_existing_char_on_current_chars_readed(next_char,current_chars_readed);
             if(position_existing_char != -1){
                 int go_back_positions = buffer_index - position_existing_char + 1;
-                printf("EL CHAR [%c] ya existe en la posicion [%d] del buffer\n",next_char);
+                printf("CURRENT CHAR ES [%c] y EL CHAR futuro [%c] SI existe en la posicion [%d] del buffer y voy leyendo por el indice [%d]"\
+                        "y la resta es [%d]\n",current_char, next_char,position_existing_char,buffer_index, (buffer_index-position_existing_char));
                 //printf("EL CHAR [%c] existe en la posicion [%d]. Hay que ir [%d] pasos atras para encontrarlo\n",next_char,position_existing_char,go_back_positions);
 
                 //buffer_index++;
                 //_tuple_array = add_tuple_on_list(go_back_positions, 1, next_char, _tuple_array);
             }else{
+                //printf("CURRENT CHAR es [%c] y EL CHAR futuro [%c] NO existe y voy leyendo por el indice [%d]\n",current_char,next_char,buffer_index);
                 //printf("EL CHAR [%c] *NO* existe en la lista\n",next_char);
                 //_tuple_array = add_tuple_on_list(0,0,current_char ,_tuple_array);
             }
@@ -99,10 +102,10 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
 
 int get_position_existing_char_on_current_chars_readed(char _char, char current_chars_readed[]){
     int position = -1;
-    for(int i = 0 ; i < (int)strlen(current_chars_readed) ; i++){
+    for(int i = 0 ; i < (int)strlen(current_chars_readed) -1 ; i++){
         if(current_chars_readed[i] == _char){
             position = i;
-            break;
+            //break;
         }
     }
     return position;
