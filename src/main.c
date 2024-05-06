@@ -4,7 +4,6 @@
 #include "../header/main.h"
 #include "../header/compress.h"
 
-
 //How to compile ? write "make clean ; make" . Later enter to /bin folder and play
 int main()
 {
@@ -12,16 +11,22 @@ int main()
     char *buffer_data = "ABRACADABRA";
     printf("A COMPRIMIR: [%s] LONGITUD: [%d]: \n",buffer_data,(int)strlen(buffer_data));
     printf("---------------------------------------------------------------------\n");
-
     tuple_array *_tuples_array;
     _tuples_array = create_tuple_array();
 
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
-    //printf("PRIMERA LETRA [%c] NO EXISTE - La ponemos\n",buffer_data[0]);
-    //printf("*EL CHAR [%c] *NO* existe en la lista\n",buffer_data[0]);
     compress_data(_tuples_array , buffer_data);
 
+    printf("TUPLA RESULTANTE\n");
     show_tuples_list(_tuples_array);
+    printf("***************** MENSAJE DESCOMPRIMIDO ***************************\n");
+
+    //char data_unzip[(int)strlen(buffer_data)];
+    //memset(data_unzip,' ',(int)strlen(buffer_data));
+    //data_unzip[(int)strlen(buffer_data)+1] = '\0';
+    char *data_unzip;
+    data_unzip = descompress(_tuples_array);
+    printf("UNZIPED : [%s]\n",data_unzip);
 
     //_info_tuples_array = compress_data(compress_text);
     //if(_info_tuples_array != NULL){

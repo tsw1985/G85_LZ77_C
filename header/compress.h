@@ -1,4 +1,5 @@
 #include "../header/compresor_struct.h"
+//Global functions
 tuple_array *create_tuple_array();
 int is_char_in_tuples_list(char _char , tuple_array *_tuple_array);
 int is_tuple_list_empty(tuple_array *_tuple_array);
@@ -10,6 +11,8 @@ int get_position_existing_char_on_current_chars_readed(char _char, char current_
 
 
 
-
-
+//compresion functions
 tuple_array *compress_data(tuple_array *_tuples_array,char *data);
+
+//descompresion functions
+char *descompress(tuple_array *_tuple_array);

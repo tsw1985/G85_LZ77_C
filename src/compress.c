@@ -46,9 +46,7 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
     current_chars_readed[(int)strlen(buffer)+1] = '\0';
     current_chars_readed[0] = buffer[0];
     
-    //show_current_chars_readed(current_chars_readed);
-
-    printf("-TUPLA : back [%d] - pick[%d] - next_char [%c] NO\n",0 , 0 , buffer[0]);
+    //printf("-TUPLA : back [%d] - pick[%d] - next_char [%c] NO\n",0 , 0 , buffer[0]);
 
     for(int buffer_index = 0 ; buffer_index < strlen(buffer) ; buffer_index ++){
 
@@ -58,8 +56,6 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
         current_chars_readed[buffer_index] = current_char;
         //printf("CURRENT CHAR [%c] - NEXT CHAR [%c] y BUFFER CHAR [%c]\n",current_char,next_char,current_chars_readed[buffer_index]);
         
-        
-
         if(next_char != '\0'){
 
             int position_existing_char = get_position_existing_char_on_current_chars_readed(next_char,current_chars_readed);
@@ -68,23 +64,13 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
                 int go_back_positions = (buffer_index - position_existing_char) ;
                 char next_next_char = buffer[buffer_index+1];
                 //printf("-TUPLA : back [%d] - pick[%d] - next_char [%c]\n",go_back_positions , 1 , next_next_char);
-
                 _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
-                //printf("EL CHAR [%c] existe en la posicion [%d]. Hay que ir [%d] pasos atras para encontrarlo\n",next_char,position_existing_char,go_back_positions);
-
-                
-
             }else{
                 //printf("-TUPLA : back [%d] - pick[%d] - next_char [%c] NO\n",0 , 0 , next_char);
                 _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
-
             }
         }
-        //show_tuples_list(_tuple_array);
     }
-
-    //show_current_chars_readed(current_chars_readed);
-
     return _tuple_array;
 }
 
@@ -147,11 +133,24 @@ int is_tuple_list_empty(tuple_array *_tuple_array){
 
 void show_tuples_list(tuple_array *_tuples_array){
     for(int i = 0; i < _tuples_array->size ; i++){
-    //for(int i = 0; i < 4 ; i++){
         tuple tuple_item = _tuples_array->tuple_list[i];
         printf("TUPLA : [%d] - go_back_positions: [%d] - get_number_chars[%d] - next_char[%c]\n",i,
                                                                                                tuple_item.go_back_positions ,
                                                                                                tuple_item.get_number_chars,
                                                                                                tuple_item.next_char);
     }
+}
+
+
+char *descompress(tuple_array *_tuple_array){
+    int size_list = _tuple_array->size;
+    //char data_unziped[size_list];
+    char *data_unziped;
+    for(int i = 0; i < _tuple_array->size ; i++){
+        tuple tuple_item = _tuple_array->tuple_list[i];
+        if(tuple_item.go_back_positions == 0){
+            data_unziped[i] = tuple_item.next_char;
+        }
+    }
+    return data_unziped;
 }
