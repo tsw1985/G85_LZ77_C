@@ -67,49 +67,20 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
                 buffer_index++;
                 int go_back_positions = (buffer_index - position_existing_char) ;
                 char next_next_char = buffer[buffer_index+1];
-                printf("-TUPLA : back [%d] - pick[%d] - next_char [%c]\n",go_back_positions , 1 , next_next_char);
-                //printf("CURRENT CHAR ES [%c] y EL CHAR futuro [%c] SI existe en la posicion [%d] del buffer y voy leyendo por el indice [%d]"\
-                //        "y la resta es [%d]\n",current_char, next_char,position_existing_char,buffer_index, go_back_positions );
+                //printf("-TUPLA : back [%d] - pick[%d] - next_char [%c]\n",go_back_positions , 1 , next_next_char);
 
-                
-                
-                //_tuple_array = add_tuple_on_list(go_back_positions, 1, next_char, _tuple_array);
-
+                _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
                 //printf("EL CHAR [%c] existe en la posicion [%d]. Hay que ir [%d] pasos atras para encontrarlo\n",next_char,position_existing_char,go_back_positions);
 
                 
-                //_tuple_array = add_tuple_on_list(go_back_positions, 1, next_char, _tuple_array);
-                //buffer_index++;
+
             }else{
-                printf("-TUPLA : back [%d] - pick[%d] - next_char [%c] NO\n",0 , 0 , next_char);
-                //_tuple_array = add_tuple_on_list(0,0,current_char ,_tuple_array);
-                
+                //printf("-TUPLA : back [%d] - pick[%d] - next_char [%c] NO\n",0 , 0 , next_char);
+                _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
 
-
-                //printf("CURRENT CHAR es [%c] y EL CHAR futuro [%c] NO existe y voy leyendo por el indice [%d]\n",current_char,next_char,buffer_index);
-                //printf("EL CHAR [%c] *NO* existe en la lista\n",next_char);
-                //_tuple_array = add_tuple_on_list(0,0,current_char ,_tuple_array);
             }
-
-            /*int char_is_on_tuple_index = is_char_in_tuples_list(_current_buffer_item , _tuple_array);
-            if(char_is_on_tuple_index != -1){ // EXISTS
-
-                buffer_index++;
-                char next_next_char = buffer[buffer_index];
-                _tuple_array = add_tuple_on_list(char_is_on_tuple_index, 1, next_next_char, _tuple_array);
-                
-                printf("LETRA [%c] SI existe en posicion [%d]\n",_current_buffer_item,char_is_on_tuple_index);
-
-            }else{ //NOT EXISTS
-                printf("LETRA [%c] NO EXISTE - La ponemos\n",_current_buffer_item);
-                current_chars_readed[buffer_index] = _current_buffer_item;
-                _tuple_array = add_tuple_on_list(0,0,_current_buffer_item,_tuple_array);
-            }*/
-        
         }
-
         //show_tuples_list(_tuple_array);
-
     }
 
     //show_current_chars_readed(current_chars_readed);
