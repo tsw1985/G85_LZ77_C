@@ -51,10 +51,24 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
 
         char current_char = buffer[buffer_index];
         char next_char = buffer[buffer_index+1];
+        //add current char to readed chars list
         current_chars_readed[buffer_index] = current_char;
-        printf("CURRENT CHAR [%c] - NEXT CHAR [%c] y BUFFER CHAR [%c]\n",current_char,next_char,current_chars_readed[buffer_index]);
+        //printf("CURRENT CHAR [%c] - NEXT CHAR [%c] y BUFFER CHAR [%c]\n",current_char,next_char,current_chars_readed[buffer_index]);
         
         if(next_char != '\0'){
+
+            int position_existing_char = get_position_existing_char_on_current_chars_readed(next_char,current_chars_readed);
+            if(position_existing_char != -1){
+                int go_back_positions = buffer_index - position_existing_char + 1;
+                printf("EL CHAR [%c] ya existe en la posicion [%d] del buffer\n",next_char);
+                //printf("EL CHAR [%c] existe en la posicion [%d]. Hay que ir [%d] pasos atras para encontrarlo\n",next_char,position_existing_char,go_back_positions);
+
+                //buffer_index++;
+                //_tuple_array = add_tuple_on_list(go_back_positions, 1, next_char, _tuple_array);
+            }else{
+                //printf("EL CHAR [%c] *NO* existe en la lista\n",next_char);
+                //_tuple_array = add_tuple_on_list(0,0,current_char ,_tuple_array);
+            }
 
             /*int char_is_on_tuple_index = is_char_in_tuples_list(_current_buffer_item , _tuple_array);
             if(char_is_on_tuple_index != -1){ // EXISTS
@@ -77,12 +91,26 @@ tuple_array *compress_data(tuple_array *_tuple_array, char *buffer){
 
     }
 
+    show_current_chars_readed(current_chars_readed);
 
     return _tuple_array;
 }
 
+
+int get_position_existing_char_on_current_chars_readed(char _char, char current_chars_readed[]){
+    int position = -1;
+    for(int i = 0 ; i < (int)strlen(current_chars_readed) ; i++){
+        if(current_chars_readed[i] == _char){
+            position = i;
+            break;
+        }
+    }
+    return position;
+}
+
+
 void show_current_chars_readed(char current_chars_readed[]){
-    for( int i = 0 ; i < (int)strlen(current_chars_readed) ; i++){
+    for( int i = 0 ; i < (int)strlen(current_chars_readed)-1 ; i++){
         printf("CHARS [%d] READED [%c]\n" ,i, current_chars_readed[i]);
     }
 }
