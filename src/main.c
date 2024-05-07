@@ -13,10 +13,10 @@ int main()
     
     //DEMO STRINGS
     //strcpy(buffer_data, "TUNTUNCAS_RASCA_LA_CACHARRAaaaaaAAAAAAAaaaAAAAaaI");
-    //strcpy(buffer_data, "SUPER CALIFRISTICO CALIFRISTICO ESPIALIDOSO");
-    strcpy(buffer_data, "ABC DEF GHI JKML OPQ RST UV WXYZ");
+    strcpy(buffer_data, "SUPER CALIFRISTICO CALIFRISTICO ESPIALIDOSO");
+    //strcpy(buffer_data,   "ABCDE FGHIJKMLOPQR STUVWXYAAAAA BBBB CCCC");
 
-    printf("TO ZIP: [%s] LENGTH: [%d]: \n",buffer_data,(int)strlen(buffer_data));
+    printf("TO ZIP  : [%s] LENGTH: [%d]\n",buffer_data,(int)strlen(buffer_data));
 
     tuple_array *_tuples_array;
     _tuples_array = create_tuple_array();
@@ -32,7 +32,7 @@ int main()
     
     char *data_unzip;
     data_unzip = unzip_data(_tuples_array , strlen(buffer_data));
-    printf("UNZIPED : [%s] LENGTH [%d]\n",data_unzip,(int)strlen(data_unzip));
+    printf("UNZIPED : [%s] LENGTH: [%d]\n",data_unzip,(int)strlen(data_unzip));
 
     free(_tuples_array->tuple_list);
     free(_tuples_array);

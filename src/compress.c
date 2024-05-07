@@ -141,6 +141,10 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
         //tuple tuple_item = _tuple_array->tuple_list[i];
         tuple_item = _tuple_array->tuple_list[i];
 
+        if(tuple_item.next_char == replace){
+            tuple_item.next_char = ' ';
+        }  
+
         if(tuple_item.go_back_positions == 0){
 
             data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
@@ -212,10 +216,10 @@ char *remove_emty_spaces(char *buffer){
     }
 
 
-    printf("BUFFER REEMPLAZADO\n");
+    /*printf("BUFFER REEMPLAZADO\n");
     for(int i = 0; i < buffer_length ; i++){
         printf("LETRAS LIMPIAS [%c]\n",buffer[i]);
-    }
+    }*/
 
 
     return buffer;
