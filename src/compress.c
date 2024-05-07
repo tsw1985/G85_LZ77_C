@@ -4,6 +4,7 @@
 #include <string.h>
 
 int SPACE = 32;
+char replace = '_';
 //CREATE TUPLE LIST
 tuple_array *create_tuple_array(){
 
@@ -132,7 +133,7 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
     data_unziped->length = 1;
     char_realloc_counter++;
     
-    show_current_chars_readed(data_unziped);
+    //show_current_chars_readed(data_unziped);
 
     
     for(int i = 1; i < (_tuple_array->size) ; i++){
@@ -143,7 +144,7 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
         if(tuple_item.go_back_positions == 0){
 
             data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
-            if(tuple_item.next_char == SPACE){
+            if(tuple_item.next_char == replace){
                 tuple_item.next_char = ' ';
             }
 
@@ -157,12 +158,12 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             char next_char = tuple_item.next_char;
             //if(next_char != '\0'){
 
-                if(tuple_item.next_char == SPACE){
+                if(tuple_item.next_char == replace){
                     tuple_item.next_char = ' ';
                 }   
             
                 char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
-                if(picked_char == 0x20){
+                if(picked_char == replace){
                     picked_char = ' ';
                 }
                 //printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
@@ -195,8 +196,8 @@ void show_current_chars_readed(data_unziped_struct *data_unziped){
 
 char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_positions){
     char picked_char = data_unziped->pointer_data_unziped[data_unziped->length - go_back_positions];
-    if(picked_char == ' '){
-        picked_char = SPACE;
+    if(picked_char == replace){
+        picked_char = 32;
     }
     //printf("CHAR a devolver [%c]\n",picked_char);
     return picked_char;
@@ -205,8 +206,8 @@ char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_p
 char *remove_emty_spaces(char *buffer){
     unsigned long buffer_length = (unsigned long)strlen(buffer);
     for(int i = 0; i < buffer_length ; i++){
-        if(buffer[i] == ' '){
-            buffer[i] = SPACE;
+        if(buffer[i] == 32){
+            buffer[i] = replace;
         }
     }
 

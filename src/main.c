@@ -8,12 +8,13 @@
 int main()
 {
     //print_head_info();
-    //char *buffer_data = "ABRACADABRA";
+    printf("ESPACIO EN BLANCO [%d]\n",' ');
     char *buffer_data = (char*)malloc(150 * (int)sizeof(char));
     
     //DEMO STRINGS
-    strcpy(buffer_data, "TUNTUNCAS_RASCA_LA_CACHARRAaaaaaAAAAAAAaaaAAAAaaI");
+    //strcpy(buffer_data, "TUNTUNCAS_RASCA_LA_CACHARRAaaaaaAAAAAAAaaaAAAAaaI");
     //strcpy(buffer_data, "SUPER CALIFRISTICO CALIFRISTICO ESPIALIDOSO");
+    strcpy(buffer_data, "ABC DEF GHI JKML OPQ RST UV WXYZ");
 
     printf("TO ZIP: [%s] LENGTH: [%d]: \n",buffer_data,(int)strlen(buffer_data));
 
@@ -21,8 +22,8 @@ int main()
     _tuples_array = create_tuple_array();
 
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
-    //zip_data(_tuples_array , remove_emty_spaces(buffer_data));
-    zip_data(_tuples_array , buffer_data);
+    zip_data(_tuples_array , remove_emty_spaces(buffer_data));
+    //zip_data(_tuples_array , buffer_data);
 
     //printf("TUPLA RESULTANTE\n");
     //show_tuples_list(_tuples_array);
