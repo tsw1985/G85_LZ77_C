@@ -187,11 +187,11 @@ void show_current_chars_readed(data_unziped_struct *data_unziped){
     }
 }
 
-char get_char_from_data_unziped(char *data_unziped, int go_back_positions, int size_list){
+char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_positions){
 
-    printf("LONGITUD DE LA LISTA [%i] y pasos atras [%d] y posicion final [%d]\n",size_list,go_back_positions,(size_list - go_back_positions));
+    printf("LONGITUD DE LA LISTA [%i] y pasos atras [%d] y posicion final [%d]\n",data_unziped->length ,go_back_positions,(data_unziped->length - go_back_positions));
     //char picked_char = data_unziped[data_unziped_length - go_back_positions];
-    char picked_char = data_unziped[size_list - go_back_positions];
+    char picked_char = data_unziped->pointer_data_unziped[data_unziped->length - go_back_positions];
     printf("CHAR a devolver [%c]\n",picked_char);
     return picked_char;
 }
