@@ -36,7 +36,6 @@ tuple_array *add_firts_element_on_tuple_list(tuple_array *_tuples_array , char _
         return _tuples_array;
 }
 
-//GET A LIST OF TUPLES
 tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
 
     int window_length = 4;
@@ -46,15 +45,11 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
     current_chars_readed[(int)strlen(buffer)+1] = '\0';
     current_chars_readed[0] = buffer[0];
     
-    //printf("-TUPLA : back [%d] - pick[%d] - next_char [%c] NO\n",0 , 0 , buffer[0]);
-
     for(int buffer_index = 0 ; buffer_index < strlen(buffer) ; buffer_index ++){
 
         char current_char = buffer[buffer_index];
         char next_char = buffer[buffer_index+1];
-        //add current char to readed chars list
         current_chars_readed[buffer_index] = current_char;
-        //printf("CURRENT CHAR [%c] - NEXT CHAR [%c] y BUFFER CHAR [%c]\n",current_char,next_char,current_chars_readed[buffer_index]);
         
         if(next_char != '\0'){
 
@@ -63,31 +58,25 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
                 buffer_index++;
                 int go_back_positions = (buffer_index - position_existing_char) ;
                 char next_next_char = buffer[buffer_index+1];
-                //printf("-TUPLA : back [%d] - pick[%d] - next_char [%c]\n",go_back_positions , 1 , next_next_char);
                 _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
             }else{
-                //printf("-TUPLA : back [%d] - pick[%d] - next_char [%c] NO\n",0 , 0 , next_char);
                 _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
             }
         }
     }
+
     return _tuple_array;
 }
-
 
 int get_position_existing_char_on_current_chars_readed(char _char, char current_chars_readed[]){
     int position = -1;
     for(int i = 0 ; i < (int)strlen(current_chars_readed) -1 ; i++){
         if(current_chars_readed[i] == _char){
             position = i;
-            //break;
         }
     }
     return position;
 }
-
-
-
 
 tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , char _next_char , tuple_array *_tuple_array){
     _tuple_array->size = _tuple_array->size +1;
@@ -102,20 +91,6 @@ tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , c
     return _tuple_array;
 }
 
-//FIX THISSSSSSSSSSSSSSSSSSSSSSSSSSS
-int is_char_in_tuples_list(char _char , tuple_array *_tuple_array){
-
-    int exists_on_index = -1;
-    for(int i = _tuple_array->size-1 ; i >= 0 ; i--){
-        tuple _tuple_item = _tuple_array->tuple_list[i];
-        if(_tuple_item.next_char == _char){
-           exists_on_index = i;
-           break; 
-        }
-    }
-    return exists_on_index;
-}
-
 int is_tuple_list_empty(tuple_array *_tuple_array){
     int size = 0;
     for(int i = 0 ; i < _tuple_array->size ; i++){
@@ -123,9 +98,6 @@ int is_tuple_list_empty(tuple_array *_tuple_array){
     }
     return size;
 }
-
-
-
 
 void show_tuples_list(tuple_array *_tuples_array){
     for(int i = 0; i < _tuples_array->size ; i++){
@@ -164,34 +136,22 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
     
     show_current_chars_readed(data_unziped->pointer_data_unziped);
 
-
     
-
-
-    
-    /*
-    for(int i = 1; i < (_tuple_array->size-1) ; i++){
+    for(int i = 1; i < (_tuple_array->size) ; i++){
         printf("************** ITERACION NUMERO [%d]*******************\n",i);
         //tuple tuple_item = _tuple_array->tuple_list[i];
         tuple_item = _tuple_array->tuple_list[i];
 
-        //if(char_realloc_counter == 0){
-        //    data_unziped[0] = tuple_item.next_char;
-        //    char_realloc_counter++;
-        //}
-
         if(tuple_item.go_back_positions == 0){
 
-            
-            data_unziped_array = (char*)realloc(data_unziped_array,char_realloc_counter * (int)sizeof(char));
+            data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,char_realloc_counter * (int)sizeof(char));
             data_unziped_array[i] = tuple_item.next_char;
-            //char_realloc_counter++;
             printf("-------------|----------------\n");
             //printf("1-VALOR DE REALLOC COUNTER %d\n",char_realloc_counter);
             show_current_chars_readed(data_unziped_array);
         }else{
 
-            char picked_char = get_char_from_data_unziped(data_unziped_array , tuple_item.go_back_positions,char_realloc_counter);
+            /*char picked_char = get_char_from_data_unziped(data_unziped_array , tuple_item.go_back_positions,char_realloc_counter);
             printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
 
             
@@ -209,11 +169,11 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             data_unziped[char_realloc_counter] = picked_char;
             data_unziped[char_realloc_counter+1] = next_char;
             //printf("------------------------------\n");
-            //show_current_chars_readed(data_unziped);
+            //show_current_chars_readed(data_unziped);*/
             
         }
     }
-    */
+    
 
     
 
