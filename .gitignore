@@ -5,3 +5,6 @@
 *.o
 /obj
 /obj
+/bin
+/obj
+/obj

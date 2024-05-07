@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
+int SPACE = 32;
 //CREATE TUPLE LIST
 tuple_array *create_tuple_array(){
 
@@ -51,7 +51,7 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
         char next_char = buffer[buffer_index+1];
         current_chars_readed[buffer_index] = current_char;
         
-        if(next_char != '\0'){
+        //if(next_char != '\0'){
 
             int position_existing_char = get_position_existing_char_on_current_chars_readed(next_char,current_chars_readed);
             if(position_existing_char != -1){
@@ -62,7 +62,7 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
             }else{
                 _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
             }
-        }
+        //}
     }
 
     return _tuple_array;
@@ -142,8 +142,8 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
 
         if(tuple_item.go_back_positions == 0){
 
-            data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,char_realloc_counter * (int)sizeof(char));
-            if(tuple_item.next_char == 0x39){
+            data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
+            if(tuple_item.next_char == SPACE){
                 tuple_item.next_char = ' ';
             }
 
@@ -157,12 +157,12 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             char next_char = tuple_item.next_char;
             //if(next_char != '\0'){
 
-                if(tuple_item.next_char == 0x39){
+                if(tuple_item.next_char == SPACE){
                     tuple_item.next_char = ' ';
                 }   
             
                 char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
-                if(picked_char == 0x39){
+                if(picked_char == 0x20){
                     picked_char = ' ';
                 }
                 //printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
@@ -195,10 +195,10 @@ void show_current_chars_readed(data_unziped_struct *data_unziped){
 
 char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_positions){
     char picked_char = data_unziped->pointer_data_unziped[data_unziped->length - go_back_positions];
-    if(picked_char == 0x39){
-        picked_char = ' ';
+    if(picked_char == ' '){
+        picked_char = SPACE;
     }
-    printf("CHAR a devolver [%c]\n",picked_char);
+    //printf("CHAR a devolver [%c]\n",picked_char);
     return picked_char;
 }
 
@@ -206,15 +206,15 @@ char *remove_emty_spaces(char *buffer){
     unsigned long buffer_length = (unsigned long)strlen(buffer);
     for(int i = 0; i < buffer_length ; i++){
         if(buffer[i] == ' '){
-            buffer[i] = 0x39;
+            buffer[i] = SPACE;
         }
     }
 
 
-    /*printf("BUFFER REEMPLAZADO\n");
+    printf("BUFFER REEMPLAZADO\n");
     for(int i = 0; i < buffer_length ; i++){
         printf("LETRAS LIMPIAS [%c]\n",buffer[i]);
-    }*/
+    }
 
 
     return buffer;

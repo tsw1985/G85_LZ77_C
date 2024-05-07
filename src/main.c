@@ -12,8 +12,8 @@ int main()
     char *buffer_data = (char*)malloc(150 * (int)sizeof(char));
     
     //DEMO STRINGS
-    //strcpy(buffer_data, "TUNTUNCAS RASCA LA CACHARRA");
-    strcpy(buffer_data, "SUPER_CALIFRISTICO_CALIFRISTICO_ESPIALIDOSO");
+    strcpy(buffer_data, "TUNTUNCAS_RASCA_LA_CACHARRAaaaaaAAAAAAAaaaAAAAaaI");
+    //strcpy(buffer_data, "SUPER CALIFRISTICO CALIFRISTICO ESPIALIDOSO");
 
     printf("TO ZIP: [%s] LENGTH: [%d]: \n",buffer_data,(int)strlen(buffer_data));
 
@@ -21,8 +21,8 @@ int main()
     _tuples_array = create_tuple_array();
 
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
-    zip_data(_tuples_array , remove_emty_spaces(buffer_data));
-    //zip_data(_tuples_array , buffer_data);
+    //zip_data(_tuples_array , remove_emty_spaces(buffer_data));
+    zip_data(_tuples_array , buffer_data);
 
     //printf("TUPLA RESULTANTE\n");
     //show_tuples_list(_tuples_array);
@@ -31,7 +31,7 @@ int main()
     
     char *data_unzip;
     data_unzip = unzip_data(_tuples_array , strlen(buffer_data));
-    printf("UNZIPED : [%s]\n",data_unzip);
+    printf("UNZIPED : [%s] LENGTH [%d]\n",data_unzip,(int)strlen(data_unzip));
 
     free(_tuples_array->tuple_list);
     free(_tuples_array);
