@@ -145,10 +145,11 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
         if(tuple_item.go_back_positions == 0){
 
             data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,char_realloc_counter * (int)sizeof(char));
-            data_unziped_array[i] = tuple_item.next_char;
+            data_unziped->pointer_data_unziped[i] = tuple_item.next_char;
+            data_unziped->length = data_unziped->length +1;
             printf("-------------|----------------\n");
             //printf("1-VALOR DE REALLOC COUNTER %d\n",char_realloc_counter);
-            show_current_chars_readed(data_unziped_array);
+            show_current_chars_readed(data_unziped->pointer_data_unziped);
         }else{
 
             /*char picked_char = get_char_from_data_unziped(data_unziped_array , tuple_item.go_back_positions,char_realloc_counter);
