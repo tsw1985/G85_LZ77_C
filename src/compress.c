@@ -125,8 +125,6 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
     data_unziped->pointer_data_unziped = data_unziped_array;
     data_unziped->length = 0;
 
-
-
     //get first element on tupple
     int char_realloc_counter = 0;
     tuple tuple_item = _tuple_array->tuple_list[0];
@@ -160,8 +158,8 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             data_unziped->length = data_unziped->length +1;
 
             data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
-            data_unziped->pointer_data_unziped[data_unziped->length-1] = picked_char;
-            data_unziped->pointer_data_unziped[data_unziped->length] = next_char;
+            data_unziped->pointer_data_unziped[data_unziped->length-2] = picked_char;
+            data_unziped->pointer_data_unziped[data_unziped->length-1] = next_char;
 
             show_current_chars_readed(data_unziped);
 
@@ -188,7 +186,7 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
 
     
 
-    return data_unziped_array;
+    return data_unziped->pointer_data_unziped;
 }
 
 void show_current_chars_readed(data_unziped_struct *data_unziped){
