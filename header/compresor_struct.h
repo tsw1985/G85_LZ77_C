@@ -19,3 +19,10 @@ typedef struct
     char *pointer_data_unziped;
      
 } data_unziped_struct;
+
+typedef struct
+{
+    int length;
+    char *pointer_data_ziped;
+     
+} data_ziped_struct;

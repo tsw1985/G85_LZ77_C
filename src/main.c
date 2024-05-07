@@ -13,7 +13,7 @@ int main()
     
     //DEMO STRINGS
     //strcpy(buffer_data, "TUNTUNCAS_RASCA_LA_CACHARRAaaaaaAAAAAAAaaaAAAAaaI");
-    strcpy(buffer_data, "SUPER CALIFRISTICO CALIFRISTICO ESPIALIDOSO");
+    strcpy(buffer_data, "SUPER CALIFRISTICO CALIFRISTICO ESPIALIDOSO 12345");
     //strcpy(buffer_data,   "ABCDE FGHIJKMLOPQR STUVWXYAAAAA BBBB CCCC");
 
     printf("TO ZIP  : [%s] LENGTH: [%d]\n",buffer_data,(int)strlen(buffer_data));
@@ -22,11 +22,11 @@ int main()
     _tuples_array = create_tuple_array();
 
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
-    zip_data(_tuples_array , remove_emty_spaces(buffer_data));
-    //zip_data(_tuples_array , buffer_data);
+    //zip_data(_tuples_array , remove_emty_spaces(buffer_data));
+    zip_data(_tuples_array , buffer_data);
 
-    //printf("TUPLA RESULTANTE\n");
-    //show_tuples_list(_tuples_array);
+    printf("TUPLA RESULTANTE\n");
+    show_tuples_list(_tuples_array);
     //printf("***************** MENSAJE DESCOMPRIMIDO ***************************\n");
 
     

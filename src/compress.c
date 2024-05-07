@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-int SPACE = 32;
 char replace = '_';
 //CREATE TUPLE LIST
 tuple_array *create_tuple_array(){
@@ -39,40 +38,53 @@ tuple_array *add_firts_element_on_tuple_list(tuple_array *_tuples_array , char _
 
 tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
 
-    int window_length = 4;
-    char searching[4];
-    char current_chars_readed[(int)strlen(buffer)];
-    memset(current_chars_readed,' ',(int)strlen(buffer));
-    current_chars_readed[(int)strlen(buffer)+1] = '\0';
-    current_chars_readed[0] = buffer[0];
+    //Estructura de entrada de datos
+    data_ziped_struct *data_ziped = (data_ziped_struct*)malloc(sizeof(data_ziped_struct));
+    data_ziped->length = 0; // iniciamos la longitud a 0
+
+    //Array de letras leidas
+    char *current_chars_readed = (char*)malloc(sizeof(char));
+    //metemos array de letras en la estructura
+    data_ziped->pointer_data_ziped = current_chars_readed;
+    data_ziped->pointer_data_ziped[0] = buffer[0];
+    data_ziped->length = data_ziped->length +1;
+
     
     for(int buffer_index = 0 ; buffer_index < strlen(buffer) ; buffer_index ++){
 
         char current_char = buffer[buffer_index];
         char next_char = buffer[buffer_index+1];
-        current_chars_readed[buffer_index] = current_char;
-        
-        //if(next_char != '\0'){
 
-            int position_existing_char = get_position_existing_char_on_current_chars_readed(next_char,current_chars_readed);
-            if(position_existing_char != -1){
-                buffer_index++;
-                int go_back_positions = (buffer_index - position_existing_char) ;
-                char next_next_char = buffer[buffer_index+1];
-                _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
-            }else{
-                _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
-            }
-        //}
+        data_ziped->length = data_ziped->length +1;
+        data_ziped->length = data_ziped->length +1;
+
+        data_ziped->pointer_data_ziped = (char*)realloc(data_ziped->pointer_data_ziped , data_ziped->length * sizeof(char));
+
+        data_ziped->pointer_data_ziped[buffer_index] = current_char;
+        
+        int position_existing_char = get_position_existing_char_on_current_chars_readed(next_char,data_ziped);
+        //printf("POSITION EXISTING CHAR %d\n",position_existing_char);
+        if(position_existing_char != -1){
+
+            buffer_index++;
+            int go_back_positions = (buffer_index - position_existing_char) ;
+            char next_next_char = buffer[buffer_index+1];
+
+            _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
+        }else{
+            _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
+        }
+     
     }
 
     return _tuple_array;
 }
 
-int get_position_existing_char_on_current_chars_readed(char _char, char current_chars_readed[]){
+int get_position_existing_char_on_current_chars_readed(char _char, data_ziped_struct *data_ziped){
+    printf("NEXT CHAR -> %c\n",_char);
     int position = -1;
-    for(int i = 0 ; i < (int)strlen(current_chars_readed) -1 ; i++){
-        if(current_chars_readed[i] == _char){
+    for(int i = 0 ; i < data_ziped->length ; i++){
+        if(data_ziped->pointer_data_ziped[i] == _char){
             position = i;
         }
     }
@@ -141,16 +153,16 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
         //tuple tuple_item = _tuple_array->tuple_list[i];
         tuple_item = _tuple_array->tuple_list[i];
 
-        if(tuple_item.next_char == replace){
+        /*if(tuple_item.next_char == replace){
             tuple_item.next_char = ' ';
-        }  
+        }  */
 
         if(tuple_item.go_back_positions == 0){
 
             data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
-            if(tuple_item.next_char == replace){
+            /*if(tuple_item.next_char == replace){
                 tuple_item.next_char = ' ';
-            }
+            }*/
 
             data_unziped->pointer_data_unziped[data_unziped->length] = tuple_item.next_char;
             data_unziped->length = data_unziped->length +1;
@@ -162,14 +174,14 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             char next_char = tuple_item.next_char;
             //if(next_char != '\0'){
 
-                if(tuple_item.next_char == replace){
+                /*if(tuple_item.next_char == replace){
                     tuple_item.next_char = ' ';
-                }   
+                } */  
             
                 char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
-                if(picked_char == replace){
+                /*if(picked_char == replace){
                     picked_char = ' ';
-                }
+                }*/
                 //printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
 
                 data_unziped->length = data_unziped->length +1;
@@ -201,7 +213,7 @@ void show_current_chars_readed(data_unziped_struct *data_unziped){
 char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_positions){
     char picked_char = data_unziped->pointer_data_unziped[data_unziped->length - go_back_positions];
     if(picked_char == replace){
-        picked_char = 32;
+        picked_char = ' ';
     }
     //printf("CHAR a devolver [%c]\n",picked_char);
     return picked_char;
