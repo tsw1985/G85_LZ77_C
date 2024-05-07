@@ -143,7 +143,8 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
         if(tuple_item.go_back_positions == 0){
 
             data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,char_realloc_counter * (int)sizeof(char));
-            data_unziped->pointer_data_unziped[i] = tuple_item.next_char;
+            //data_unziped->pointer_data_unziped[i] = tuple_item.next_char;
+            data_unziped->pointer_data_unziped[data_unziped->length] = tuple_item.next_char;
             data_unziped->length = data_unziped->length +1;
             printf("-------------|----------------\n");
             //printf("1-VALOR DE REALLOC COUNTER %d\n",char_realloc_counter);
@@ -151,34 +152,21 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
         }else{
 
             char next_char = tuple_item.next_char;
-            char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
-            printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
-
-            data_unziped->length = data_unziped->length +1;
-            data_unziped->length = data_unziped->length +1;
-
-            data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
-            data_unziped->pointer_data_unziped[data_unziped->length-2] = picked_char;
-            data_unziped->pointer_data_unziped[data_unziped->length-1] = next_char;
-
-            show_current_chars_readed(data_unziped);
-
-            /*
-            char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions,char_realloc_counter);
-            printf("CHAR CAPTURADO %c\n",picked_char);
-            char next_char = tuple_item.next_char;
+            //if(next_char != '\0'){
             
+                char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
+                printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
 
-            char_realloc_counter++;
-            char_realloc_counter++;
+                data_unziped->length = data_unziped->length +1;
+                data_unziped->length = data_unziped->length +1;
 
-            printf("2-VALOR DE REALLOC COUNTER %d\n",char_realloc_counter);
+                data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
+                data_unziped->pointer_data_unziped[data_unziped->length-2] = picked_char;
+                data_unziped->pointer_data_unziped[data_unziped->length-1] = next_char;
 
-            data_unziped = (char*)realloc(data_unziped,char_realloc_counter * (int)sizeof(char));
-            data_unziped[char_realloc_counter] = picked_char;
-            data_unziped[char_realloc_counter+1] = next_char;
-            //printf("------------------------------\n");
-            //show_current_chars_readed(data_unziped);*/
+                show_current_chars_readed(data_unziped);
+
+            //}
             
         }
     }

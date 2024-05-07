@@ -8,7 +8,10 @@
 int main()
 {
     //print_head_info();
-    char *buffer_data = "ABRACADABRA";
+    //char *buffer_data = "ABRACADABRA";
+    char *buffer_data = (char*)malloc(15 * (int)sizeof(char));
+    buffer_data = "TUNTUNCASARASCALACACHARRA";
+
     printf("A COMPRIMIR: [%s] LONGITUD: [%d]: \n",buffer_data,(int)strlen(buffer_data));
     printf("---------------------------------------------------------------------\n");
     tuple_array *_tuples_array;
