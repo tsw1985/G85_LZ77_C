@@ -134,7 +134,7 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
     data_unziped->length = 1;
     char_realloc_counter++;
     
-    show_current_chars_readed(data_unziped->pointer_data_unziped);
+    show_current_chars_readed(data_unziped);
 
     
     for(int i = 1; i < (_tuple_array->size) ; i++){
@@ -149,7 +149,7 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             data_unziped->length = data_unziped->length +1;
             printf("-------------|----------------\n");
             //printf("1-VALOR DE REALLOC COUNTER %d\n",char_realloc_counter);
-            show_current_chars_readed(data_unziped->pointer_data_unziped);
+            show_current_chars_readed(data_unziped);
         }else{
 
             /*char picked_char = get_char_from_data_unziped(data_unziped_array , tuple_item.go_back_positions,char_realloc_counter);
@@ -181,9 +181,9 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
     return data_unziped_array;
 }
 
-void show_current_chars_readed(char current_chars_readed[]){
-    for( int i = 0 ; i < (int)strlen(current_chars_readed) ; i++){
-        printf("CHARS [%d] READED [%c]\n" ,i, current_chars_readed[i]);
+void show_current_chars_readed(data_unziped_struct *data_unziped){
+    for( int i = 0 ; i < data_unziped->length ; i++){
+        printf("CHARS [%d] READED [%c]\n" ,i, data_unziped->pointer_data_unziped[i]);
     }
 }
 
