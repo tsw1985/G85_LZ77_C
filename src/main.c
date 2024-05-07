@@ -9,36 +9,29 @@ int main()
 {
     //print_head_info();
     //char *buffer_data = "ABRACADABRA";
-    char *buffer_data = (char*)malloc(15 * (int)sizeof(char));
-    buffer_data = "TUNTUNCASARASCALACACHARRA";
+    char *buffer_data = (char*)malloc(150 * (int)sizeof(char));
+    
+    //DEMO STRINGS
+    //strcpy(buffer_data, "TUNTUNCAS RASCA LA CACHARRA");
+    strcpy(buffer_data, "SUPER_CALIFRISTICO_CALIFRISTICO_ESPIALIDOSO");
 
-    printf("A COMPRIMIR: [%s] LONGITUD: [%d]: \n",buffer_data,(int)strlen(buffer_data));
-    printf("---------------------------------------------------------------------\n");
+    printf("TO ZIP: [%s] LENGTH: [%d]: \n",buffer_data,(int)strlen(buffer_data));
+
     tuple_array *_tuples_array;
     _tuples_array = create_tuple_array();
 
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
-    zip_data(_tuples_array , buffer_data);
+    zip_data(_tuples_array , remove_emty_spaces(buffer_data));
+    //zip_data(_tuples_array , buffer_data);
 
-    printf("TUPLA RESULTANTE\n");
-    show_tuples_list(_tuples_array);
-    printf("***************** MENSAJE DESCOMPRIMIDO ***************************\n");
+    //printf("TUPLA RESULTANTE\n");
+    //show_tuples_list(_tuples_array);
+    //printf("***************** MENSAJE DESCOMPRIMIDO ***************************\n");
 
-    //char data_unzip[(int)strlen(buffer_data)];
-    //memset(data_unzip,' ',(int)strlen(buffer_data));
-    //data_unzip[(int)strlen(buffer_data)+1] = '\0';
+    
     char *data_unzip;
     data_unzip = unzip_data(_tuples_array , strlen(buffer_data));
     printf("UNZIPED : [%s]\n",data_unzip);
-
-    //_info_tuples_array = compress_data(compress_text);
-    //if(_info_tuples_array != NULL){
-
-    //}
-
-
-
-    
 
     free(_tuples_array->tuple_list);
     free(_tuples_array);

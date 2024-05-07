@@ -1,3 +1,7 @@
 
 /obj
 /bin
+/bin
+*.o
+/obj
+/obj

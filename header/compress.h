@@ -16,3 +16,4 @@ tuple_array *zip_data(tuple_array *_tuples_array,char *data);
 //descompresion functions
 char *unzip_data(tuple_array *_tuple_array , int buffer_data_length);
 char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_positions);
+char *remove_emty_spaces(char *buffer);

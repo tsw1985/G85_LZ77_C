@@ -136,26 +136,36 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
 
     
     for(int i = 1; i < (_tuple_array->size) ; i++){
-        printf("************** ITERACION NUMERO [%d]*******************\n",i);
+        //printf("************** ITERACION NUMERO [%d]*******************\n",i);
         //tuple tuple_item = _tuple_array->tuple_list[i];
         tuple_item = _tuple_array->tuple_list[i];
 
         if(tuple_item.go_back_positions == 0){
 
             data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,char_realloc_counter * (int)sizeof(char));
-            //data_unziped->pointer_data_unziped[i] = tuple_item.next_char;
+            if(tuple_item.next_char == 0x39){
+                tuple_item.next_char = ' ';
+            }
+
             data_unziped->pointer_data_unziped[data_unziped->length] = tuple_item.next_char;
             data_unziped->length = data_unziped->length +1;
-            printf("-------------|----------------\n");
+            //printf("-------------|----------------\n");
             //printf("1-VALOR DE REALLOC COUNTER %d\n",char_realloc_counter);
-            show_current_chars_readed(data_unziped);
+            //show_current_chars_readed(data_unziped);
         }else{
 
             char next_char = tuple_item.next_char;
             //if(next_char != '\0'){
+
+                if(tuple_item.next_char == 0x39){
+                    tuple_item.next_char = ' ';
+                }   
             
                 char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
-                printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
+                if(picked_char == 0x39){
+                    picked_char = ' ';
+                }
+                //printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
 
                 data_unziped->length = data_unziped->length +1;
                 data_unziped->length = data_unziped->length +1;
@@ -164,7 +174,7 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
                 data_unziped->pointer_data_unziped[data_unziped->length-2] = picked_char;
                 data_unziped->pointer_data_unziped[data_unziped->length-1] = next_char;
 
-                show_current_chars_readed(data_unziped);
+                //show_current_chars_readed(data_unziped);
 
             //}
             
@@ -184,10 +194,28 @@ void show_current_chars_readed(data_unziped_struct *data_unziped){
 }
 
 char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_positions){
-
-    printf("LONGITUD DE LA LISTA [%i] y pasos atras [%d] y posicion final [%d]\n",data_unziped->length ,go_back_positions,(data_unziped->length - go_back_positions));
-    //char picked_char = data_unziped[data_unziped_length - go_back_positions];
     char picked_char = data_unziped->pointer_data_unziped[data_unziped->length - go_back_positions];
+    if(picked_char == 0x39){
+        picked_char = ' ';
+    }
     printf("CHAR a devolver [%c]\n",picked_char);
     return picked_char;
+}
+
+char *remove_emty_spaces(char *buffer){
+    unsigned long buffer_length = (unsigned long)strlen(buffer);
+    for(int i = 0; i < buffer_length ; i++){
+        if(buffer[i] == ' '){
+            buffer[i] = 0x39;
+        }
+    }
+
+
+    /*printf("BUFFER REEMPLAZADO\n");
+    for(int i = 0; i < buffer_length ; i++){
+        printf("LETRAS LIMPIAS [%c]\n",buffer[i]);
+    }*/
+
+
+    return buffer;
 }
