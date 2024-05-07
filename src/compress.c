@@ -152,10 +152,20 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             show_current_chars_readed(data_unziped);
         }else{
 
-            /*char picked_char = get_char_from_data_unziped(data_unziped_array , tuple_item.go_back_positions,char_realloc_counter);
+            char next_char = tuple_item.next_char;
+            char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
             printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
 
-            
+            data_unziped->length = data_unziped->length +1;
+            data_unziped->length = data_unziped->length +1;
+
+            data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
+            data_unziped->pointer_data_unziped[data_unziped->length-1] = picked_char;
+            data_unziped->pointer_data_unziped[data_unziped->length] = next_char;
+
+            show_current_chars_readed(data_unziped);
+
+            /*
             char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions,char_realloc_counter);
             printf("CHAR CAPTURADO %c\n",picked_char);
             char next_char = tuple_item.next_char;
