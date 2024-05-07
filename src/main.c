@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
     
     //DEMO STRINGS
-    strcpy(buffer_data, "ESTE Y DESCOMPRIMIDOOO 445");
-    //strcpy(buffer_data, "aaaaaaaaaaaaaaaaa kkkkkkkkkkkk          kkkkkkkkkkkkkkkkkkk         aaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbccccccccccc ccccccccccccccccccccc  aaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbb ccccddddddddddddddddddddddddddddP");
-    printf("TO ZIP  : [%s] LENGTH: [%d]\n",buffer_data,(int)strlen(buffer_data));
+    strcpy(buffer_data, "ESTE Y DESCOMPRIMIDOOO 4455 55555555555555555555555 66666666666666666668");
+    unsigned long zip_data_size = (unsigned int)strlen(buffer_data);
+    printf("TO ZIP  : [%s] LENGTH: [%d]\n",buffer_data,zip_data_size);
 
     tuple_array *_tuples_array;
     _tuples_array = create_tuple_array();
@@ -35,15 +35,13 @@ int main(int argc, char *argv[])
     // UNZIP
     char *data_unzip;
     data_unzip = unzip_data(_tuples_array);
-    
-    //data_unzip[strlen(data_unzip)] = '\0';
-    //data_unzip[strlen(data_unzip)-1] = '\0';
-    //data_unzip[strlen(data_unzip)-1] = '\0';
-    //data_unzip[strcspn(data_unzip, "\n")] = '\0';
-    //data_unzip[strcspn(data_unzip, "\0")] = '\0';
-    
-    printf("UNZIPED : [%s] LENGTH: [%d]\n",data_unzip,(int)strlen(data_unzip));
+    unsigned long unzip_data_size = (unsigned int)strlen(data_unzip);
+    if(unzip_data_size > zip_data_size){
+        data_unzip[strlen(data_unzip)-1] = '\0';
+    }
 
+    printf("UNZIPED : [%s] LENGTH: [%d]\n",data_unzip,(int)strlen(data_unzip));
+    
     free(_tuples_array->tuple_list);
     free(_tuples_array);
     return 0;
