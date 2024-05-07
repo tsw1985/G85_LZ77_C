@@ -12,8 +12,8 @@ int get_position_existing_char_on_current_chars_readed(char _char, char current_
 
 
 //compresion functions
-tuple_array *compress_data(tuple_array *_tuples_array,char *data);
+tuple_array *zip_data(tuple_array *_tuples_array,char *data);
 
 //descompresion functions
-char *descompress(tuple_array *_tuple_array , int buffer_data_length);
-char get_char_from_data_unziped(char *data_unziped, int position);
+char *unzip_data(tuple_array *_tuple_array , int buffer_data_length);
+char get_char_from_data_unziped(char *data_unziped, int position , int size_list);
