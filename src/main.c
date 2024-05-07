@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
     
     //DEMO STRINGS
-    strcpy(buffer_data, "ESTE Y DESCOMPRIMIDOOO 4455 55555555555555555555555 66666666666666666668");
+    strcpy(buffer_data, "ESTE Y DESCOMPR jejejeje");
     unsigned long zip_data_size = (unsigned int)strlen(buffer_data);
     printf("TO ZIP  : [%s] LENGTH: [%d]\n",buffer_data,zip_data_size);
 
@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
         data_unzip[strlen(data_unzip)-1] = '\0';
     }
 
+    printf("\n");
     printf("UNZIPED : [%s] LENGTH: [%d]\n",data_unzip,(int)strlen(data_unzip));
     
     free(_tuples_array->tuple_list);
