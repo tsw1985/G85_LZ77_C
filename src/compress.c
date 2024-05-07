@@ -158,17 +158,18 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
     //get first element on tupple
     int char_realloc_counter = 0;
     tuple tuple_item = _tuple_array->tuple_list[0];
-    data_unziped_array[0] = tuple_item.next_char;
+    data_unziped->pointer_data_unziped[0] = tuple_item.next_char;
+    data_unziped->length = 1;
     char_realloc_counter++;
     
-    show_current_chars_readed(data_unziped_array);
+    show_current_chars_readed(data_unziped->pointer_data_unziped);
 
 
     
 
 
     
-    
+    /*
     for(int i = 1; i < (_tuple_array->size-1) ; i++){
         printf("************** ITERACION NUMERO [%d]*******************\n",i);
         //tuple tuple_item = _tuple_array->tuple_list[i];
@@ -193,7 +194,7 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             char picked_char = get_char_from_data_unziped(data_unziped_array , tuple_item.go_back_positions,char_realloc_counter);
             printf("PICKED CHAR [%c] y NEXT CHAR -> %c\n",picked_char, tuple_item.next_char);
 
-            /*
+            
             char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions,char_realloc_counter);
             printf("CHAR CAPTURADO %c\n",picked_char);
             char next_char = tuple_item.next_char;
@@ -209,10 +210,10 @@ char *unzip_data(tuple_array *_tuple_array , int buffer_data_length){
             data_unziped[char_realloc_counter+1] = next_char;
             //printf("------------------------------\n");
             //show_current_chars_readed(data_unziped);
-            */
+            
         }
     }
-
+    */
 
     
 

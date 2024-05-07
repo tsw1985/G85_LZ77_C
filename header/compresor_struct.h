@@ -13,7 +13,7 @@ typedef struct
     long size;
 } tuple_array;
 
-typedef struct compresor_struct
+typedef struct
 {
     int length;
     char *pointer_data_unziped;
