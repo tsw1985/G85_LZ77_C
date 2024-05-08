@@ -59,7 +59,15 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
     data_ziped->pointer_data_ziped[0] = buffer[0];
     data_ziped->length = data_ziped->length +1;
 
-    long buffer_length = (int)strlen(buffer);
+    //le damos ya un espacio grande para que meta las tuplas.
+    long buffer_length = strlen(buffer);
+    data_ziped->pointer_data_ziped = (char*)realloc(data_ziped->pointer_data_ziped , (buffer_length + 1) * sizeof(char));
+    if(data_ziped->pointer_data_ziped == NULL){
+        printf("ERROR REALLOC() zip_data()\n");
+        exit(EXIT_FAILURE);
+    }
+
+
     for(int buffer_index = 0 ; buffer_index < buffer_length; buffer_index ++){
 
         if(buffer_index >= 0 && buffer_index < buffer_length){
@@ -67,11 +75,6 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
             char next_char = buffer[buffer_index+1];
 
             data_ziped->length +=2;
-            data_ziped->pointer_data_ziped = (char*)realloc(data_ziped->pointer_data_ziped , data_ziped->length * sizeof(char));
-            if(data_ziped->pointer_data_ziped == NULL){
-                printf("ERROR REALLOC() zip_data()\n");
-                exit(EXIT_FAILURE);
-            }
             data_ziped->pointer_data_ziped[buffer_index] = current_char;
             
             int position_existing_char = get_position_existing_char_on_current_chars_readed(next_char,data_ziped);
