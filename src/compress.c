@@ -113,13 +113,6 @@ int get_position_existing_char_on_current_chars_readed(char _char, data_ziped_st
 tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , char _next_char , tuple_array *_tuple_array){
     
     _tuple_array->size = _tuple_array->size +1;
-    /*_tuple_array->tuple_list = (tuple*)realloc(_tuple_array->tuple_list , (_tuple_array->size) * sizeof(tuple));
-    if(_tuple_array->tuple_list == NULL){
-        printf("ERROR MALLOC() add_tuple_on_list()\n");
-        exit(EXIT_FAILURE);
-    }*/
-    
-    
     tuple tuple_item;
     tuple_item.go_back_positions = _go_back_positions;
     tuple_item.get_number_chars = _get_number_chars;

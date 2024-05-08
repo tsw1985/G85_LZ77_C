@@ -13,10 +13,8 @@ int main(int argc, char *argv[])
     printf("BUFFER SIZE: [ %lu ]\n",buffer_size);
     char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
     
-    //DEMO STRINGS + 398 chars, pete.
-    //strcpy(buffer_data, "ESsTE jjjjjjj jjjjjjjjjjjjjjjjjjjjj jjgfdsg jjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjj jj  d fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjgfdsgd fsdfsdsfgdfsgdsfg dsf  jjgfdsgd fsdfsdsfgdfsgdsfg dsf jjjjjjjjjjjjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiipppppppppppppppppppppppppp oooooooooooooooooooooooooooooooo iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijhkjhiiiiiiiiiiiiiiiiioooooooooooooooooooooojjjjjjjjjjjjjjjjjjjjjjjjjjjYyyyyyjijiojoij oij oij oij oij oij oij oij yyy jejeejejejelggggggggggggggzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzddddooodddddssssssssksssllssllllsssss4 ");
-    //strcpy(buffer_data, "TUN TUN CAS RASCA LA CACHARRA jaja jeje");
-    strcpy(buffer_data, "TUN*TUN*CAS*RASCA*LA*CACHARRA*jaja*jeje");
+    //strcpy(buffer_data, "ABRACADABRAPATADECABRA");
+    strcpy(buffer_data, "ESTO ES UN TEXTO QUE SERA COMPRIMIDO Y DESCOMPRIMIDO");
     unsigned long zip_data_size = (unsigned long)strlen(buffer_data);
     printf("TO ZIP  : [%s] LENGTH: [%lu]\n",buffer_data,zip_data_size);
 
@@ -27,10 +25,14 @@ int main(int argc, char *argv[])
     add_firts_element_on_tuple_list(_tuples_array,buffer_data[0]);
     zip_data(_tuples_array , buffer_data);
 
+
     if(argc > 1){
+
         if(strcmp(argv[1], "show_tuples")){
-            printf("LONGITUD COMPRIMIDA [%lu]\n",_tuples_array->size);
-            show_tuples_list(_tuples_array);
+            //show_tuples_list(_tuples_array);
+        }
+        if(strcmp(argv[1], "show_zip_length")){
+            //printf("LONGITUD COMPRIMIDA [%lu]\n",_tuples_array->size);
         }
             
     }
@@ -39,13 +41,8 @@ int main(int argc, char *argv[])
     // UNZIP
     char *data_unzip;
     data_unzip = unzip_data(_tuples_array);
-    unsigned long unzip_data_size = (unsigned int)strlen(data_unzip);
-    if(unzip_data_size > zip_data_size){
-        data_unzip[strlen(data_unzip)-1] = '\0';
-    }
-
     printf("\n");
-    printf("UNZIPED : [%s] LENGTH: [%d]\n",data_unzip,(int)strlen(data_unzip));
+    printf("UNZIPED DATA: [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
     
     free(_tuples_array->tuple_list);
     free(_tuples_array);
