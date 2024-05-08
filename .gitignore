@@ -12,3 +12,4 @@ bin/main
 bin/main
 /obj
 /obj
+*.o
