@@ -68,6 +68,14 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
     }
 
 
+    //creamos espacios para tuplas tambien
+    _tuple_array->tuple_list = (tuple*)realloc(_tuple_array->tuple_list , buffer_length * sizeof(tuple));
+    if(_tuple_array->tuple_list == NULL){
+        printf("ERROR MALLOC() add_tuple_on_list()\n");
+        exit(EXIT_FAILURE);
+    }
+
+
     for(int buffer_index = 0 ; buffer_index < buffer_length; buffer_index ++){
 
         if(buffer_index >= 0 && buffer_index < buffer_length){
@@ -103,12 +111,13 @@ int get_position_existing_char_on_current_chars_readed(char _char, data_ziped_st
 }
 
 tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , char _next_char , tuple_array *_tuple_array){
+    
     _tuple_array->size = _tuple_array->size +1;
-    _tuple_array->tuple_list = (tuple*)realloc(_tuple_array->tuple_list , (_tuple_array->size) * sizeof(tuple));
+    /*_tuple_array->tuple_list = (tuple*)realloc(_tuple_array->tuple_list , (_tuple_array->size) * sizeof(tuple));
     if(_tuple_array->tuple_list == NULL){
         printf("ERROR MALLOC() add_tuple_on_list()\n");
         exit(EXIT_FAILURE);
-    }
+    }*/
     
     
     tuple tuple_item;

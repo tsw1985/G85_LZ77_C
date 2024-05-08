@@ -13,3 +13,4 @@ bin/main
 /obj
 /obj
 *.o
+*.o
