@@ -11,7 +11,7 @@ tuple_array *create_tuple_array(){
     tuple_array *_tuple_array = (tuple_array*)malloc(sizeof(tuple_array));
     if(_tuple_array == NULL){
         printf("ERROR MALLOC() create_tuple_array()\n");
-        return NULL;
+        exit(EXIT_FAILURE);
     }
     _tuple_array->size = 0;
     return _tuple_array;
@@ -23,8 +23,8 @@ tuple_array *add_firts_element_on_tuple_list(tuple_array *_tuples_array , char _
         _tuples_array->tuple_list = (tuple*)realloc(_tuples_array->tuple_list , 1 * sizeof(tuple));
         if(_tuples_array->tuple_list == NULL){
             printf("ERROR MALLOC() add_firts_element_on_tuple_list()\n");
-        return NULL;
-    }
+            exit(EXIT_FAILURE);
+        }
         _tuples_array->size = 1;
 
         tuple tuple_item;
@@ -43,7 +43,7 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
     data_ziped_struct *data_ziped = (data_ziped_struct*)malloc(sizeof(data_ziped_struct));
     if(data_ziped == NULL){
         printf("ERROR MALLOC() zip_data() - data_ziped\n");
-        return NULL;
+        exit(EXIT_FAILURE);
     }
 
     data_ziped->length = 0; // iniciamos la longitud a 0
@@ -52,7 +52,7 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
     char *current_chars_readed = (char*)malloc(sizeof(char));
     if(current_chars_readed == NULL){
         printf("ERROR MALLOC() zip_data() - current_chars_readed\n");
-        return NULL;
+        exit(EXIT_FAILURE);
     }
     //metemos array de letras en la estructura
     data_ziped->pointer_data_ziped = current_chars_readed;
@@ -70,7 +70,7 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
             data_ziped->pointer_data_ziped = (char*)realloc(data_ziped->pointer_data_ziped , data_ziped->length * sizeof(char));
             if(data_ziped->pointer_data_ziped == NULL){
                 printf("ERROR REALLOC() zip_data()\n");
-                return NULL;
+                exit(EXIT_FAILURE);
             }
             data_ziped->pointer_data_ziped[buffer_index] = current_char;
             
@@ -104,7 +104,7 @@ tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , c
     _tuple_array->tuple_list = (tuple*)realloc(_tuple_array->tuple_list , (_tuple_array->size) * sizeof(tuple));
     if(_tuple_array->tuple_list == NULL){
         printf("ERROR MALLOC() add_tuple_on_list()\n");
-        return NULL;
+        exit(EXIT_FAILURE);
     }
     
     
@@ -142,14 +142,14 @@ char *unzip_data(tuple_array *_tuple_array){
     data_unziped = (data_unziped_struct*)malloc(sizeof(data_unziped_struct));
     if(data_unziped == NULL){
         printf("ERROR MALLOC() data_unziped- unzip_data()\n");
-        return NULL;
+        exit(EXIT_FAILURE);
     }
 
 
     char *data_unziped_array = (char*)malloc(1 * (int)sizeof(char));
     if(data_unziped == NULL){
         printf("ERROR MALLOC() unzip_data() - data_unziped_array\n");
-        return NULL;
+        exit(EXIT_FAILURE);
     }
 
     data_unziped->pointer_data_unziped = data_unziped_array;
@@ -174,7 +174,7 @@ char *unzip_data(tuple_array *_tuple_array){
                         data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
                         if(data_unziped->pointer_data_unziped==NULL){
                             printf("ERROR MALLOC() unzip_data() - data_unziped->pointer_data_unziped 1\n");
-                            return NULL;
+                            exit(EXIT_FAILURE);
                         }
                         data_unziped->pointer_data_unziped[data_unziped->length] = tuple_item.next_char;
                         data_unziped->length = data_unziped->length +1;
@@ -191,7 +191,7 @@ char *unzip_data(tuple_array *_tuple_array){
                         data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
                         if(data_unziped->pointer_data_unziped==NULL){
                             printf("ERROR MALLOC() unzip_data() - data_unziped->pointer_data_unziped 2\n");
-                            return NULL;
+                            exit(EXIT_FAILURE);
                         }
                         data_unziped->pointer_data_unziped[data_unziped->length-2] = picked_char;
                         data_unziped->pointer_data_unziped[data_unziped->length-1] = next_char;

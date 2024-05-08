@@ -10,11 +10,12 @@ int main(int argc, char *argv[])
 
     print_head_info();
     long buffer_size = 128 * 1024;
+    printf("BUFFER SIZE %d\n",buffer_size);
     char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
     
     //DEMO STRINGS + 398 chars, pete.
-    //strcpy(buffer_data, "ESsTE jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiipppppppppppppppppppppppppp oooooooooooooooooooooooooooooooo iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijhkjhiiiiiiiiiiiiiiiiioooooooooooooooooooooojjjjjjjjjjjjjjjjjjjjjjjjjjjYyyyyyjijiojoij oij oij oij oij oij oij oij yyy jejeejejejelggggggggggggggzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzddddooodddddssssssssksssllssllllsssss4");
-    strcpy(buffer_data, "TUN TUN CAS RASCA LA CACHARRA jaja jeje");
+    strcpy(buffer_data, "ESsTE jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiipppppppppppppppppppppppppp oooooooooooooooooooooooooooooooo iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijhkjhiiiiiiiiiiiiiiiiioooooooooooooooooooooojjjjjjjjjjjjjjjjjjjjjjjjjjjYyyyyyjijiojoij oij oij oij oij oij oij oij yyy jejeejejejelggggggggggggggzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzddddooodddddssssssssksssllssllllsssss4");
+    //strcpy(buffer_data, "TUN TUN CAS RASCA LA CACHARRA jaja jeje");
     unsigned long zip_data_size = (unsigned long)strlen(buffer_data);
     printf("TO ZIP  : [%s] LENGTH: [%d]\n",buffer_data,zip_data_size);
 
