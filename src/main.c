@@ -12,9 +12,10 @@ int main(int argc, char *argv[])
     long buffer_size = 128 * 1024;
     char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
     
-    //DEMO STRINGS
-    strcpy(buffer_data, "ESTE Y DESCOMPR jejejeje");
-    unsigned long zip_data_size = (unsigned int)strlen(buffer_data);
+    //DEMO STRINGS + 398 chars, pete.
+    //strcpy(buffer_data, "ESsTE jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiipppppppppppppppppppppppppp oooooooooooooooooooooooooooooooo iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijhkjhiiiiiiiiiiiiiiiiioooooooooooooooooooooojjjjjjjjjjjjjjjjjjjjjjjjjjjYyyyyyjijiojoij oij oij oij oij oij oij oij yyy jejeejejejelggggggggggggggzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzddddooodddddssssssssksssllssllllsssss4");
+    strcpy(buffer_data, "TUN TUN CAS RASCA LA CACHARRA jaja jeje");
+    unsigned long zip_data_size = (unsigned long)strlen(buffer_data);
     printf("TO ZIP  : [%s] LENGTH: [%d]\n",buffer_data,zip_data_size);
 
     tuple_array *_tuples_array;
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
     data_unzip = unzip_data(_tuples_array);
     unsigned long unzip_data_size = (unsigned int)strlen(data_unzip);
     if(unzip_data_size > zip_data_size){
-        data_unzip[strlen(data_unzip)-1] = '\0';
+        //data_unzip[strlen(data_unzip)-1] = '\0';
     }
 
     printf("\n");
