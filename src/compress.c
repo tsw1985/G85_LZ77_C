@@ -178,7 +178,7 @@ char *unzip_data(tuple_array *_tuple_array){
             
 
                 if(tuple_item.go_back_positions == 0){
-                    if(tuple_item.next_char != '\0'){
+                    //if(tuple_item.next_char != '\n'){
                         data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
                         if(data_unziped->pointer_data_unziped==NULL){
                             printf("ERROR MALLOC() unzip_data() - data_unziped->pointer_data_unziped 1\n");
@@ -186,12 +186,12 @@ char *unzip_data(tuple_array *_tuple_array){
                         }
                         data_unziped->pointer_data_unziped[data_unziped->length] = tuple_item.next_char;
                         data_unziped->length = data_unziped->length +1;
-                    }
+                    //}
 
                 }else{
 
                     char next_char = tuple_item.next_char;
-                    if(next_char != '\0'){
+                    //if(next_char != '\n'){
                         char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
 
                         data_unziped->length +=2;
@@ -203,7 +203,7 @@ char *unzip_data(tuple_array *_tuple_array){
                         }
                         data_unziped->pointer_data_unziped[data_unziped->length-2] = picked_char;
                         data_unziped->pointer_data_unziped[data_unziped->length-1] = next_char;
-                    }
+                    //}
                 }
             
         }

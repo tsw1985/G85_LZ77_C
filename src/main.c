@@ -55,7 +55,7 @@ int start_zip_process(FILE* file){
         //una vez tenemos la tupla , pasamos a guardar esta misma estructura
         //en un fichero de forma binaria
 
-        show_tuples_list(_tuple_to_file);
+        //show_tuples_list(_tuple_to_file);
 
         //if(_tuple_to_file){
             //write file zipped
@@ -66,15 +66,16 @@ int start_zip_process(FILE* file){
 
 
         if(buffer_size >= blocks_counter){
-            fseek(file , blocks_counter , SEEK_CUR);
-            blocks_counter = blocks_counter + buffer_size ;
+            //fseek(file , blocks_counter , SEEK_CUR);
+            //blocks_counter = blocks_counter + buffer_size ;
         }
 
 
 
         // UNZIP
-        //char *data_unzip = unzip_data(_tuples_array);
-        //printf("-: [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
+        char *data_unzip = unzip_data(_tuples_array);
+        printf("-: [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
+        printf("-------------------------------------------------------\n");
 
 
     } //fin while read file
