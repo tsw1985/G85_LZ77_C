@@ -58,12 +58,18 @@ int start_zip_process(FILE* file){
     }
 
     // Empezamos a leer el fichero
-    while ((readed_bytes = fread(buffer_data, sizeof(char), buffer_size, file)) > 0) {
+    while ((readed_bytes = fread(buffer_data, sizeof(char), buffer_size, file)) > 0 ) {
 
-        //if (readed_bytes < buffer_size) {
-        //    printf("REDIMENSIONANDO BUFFER_DATA\n");
-        //    buffer_data = (char*)realloc(buffer_data, readed_bytes * sizeof(char));
-        //}
+        
+
+        
+        printf("DATOS LEIDOS %s\n",buffer_data);
+
+        if (readed_bytes < buffer_size) {
+            printf("REDIMENSIONANDO BUFFER_DATA\n");
+            buffer_data = (char*)realloc(buffer_data, readed_bytes * sizeof(char));
+            
+        }
 
         // ---------------- ZIP DATA -----------------------
         add_firts_element_on_tuple_list(_tuples_array, buffer_data[0]);
@@ -85,6 +91,7 @@ int start_zip_process(FILE* file){
         //char *data_unzip = unzip_data(_tuples_array);
         //printf("-[%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
         
+        memset(buffer_data,0,readed_bytes);
 
     } // fin while read file
 
@@ -125,28 +132,61 @@ tuple_array *start_unzip_process(FILE *file){
 
 
 
-    size_t readed_bytes;
-    //empezamos a leer
-    //while ((readed_bytes = fread(buffer_data, sizeof(char), buffer_size, file)) > 0) {
+    char unzip_file_name_unziped[] = "/media/gabriel/1C20FACF20FAAF40/DEVELOPER/C/code/LZ77_C/demotext_final.txt";
+     FILE* fileUnziped = fopen(unzip_file_name_unziped, "w");
+
+    while (!feof(file)) {
+
+        
+        fread(array->tuple_list, sizeof(tuple), array->size, file);
+        fread(&array->size, sizeof(size_t), 1, file);
+        char *data_unzip3 = unzip_data(array);
+        printf("TUPLA DESCOMPRIMIDA 2 -> [%s] LENGTH: [%lu]\n",data_unzip3, strlen(data_unzip3));
 
 
 
+        //escribir en fichero final
+        //fwrite(&data_unzip3, sizeof(data_unzip3), 1 ,fileUnziped);
+        fwrite(data_unzip3, sizeof(char), strlen(data_unzip3), fileUnziped);
+        free(data_unzip3);
 
+    }
+
+
+    // ************** DEMO FUNCIONA VARIAS TUPLAS *********************
+    /*size_t readed_bytes;
     // Leer las tuplas desde el archivo
     fread(array->tuple_list, sizeof(tuple), array->size, file);
 
     //show_tuples_list(array);
-
     char *data_unzip = unzip_data(array);
     printf("TUPLA DESCOMPRIMIDA -> [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
 
 
+    // Leer el tamaño del array de tuplas
+    fread(&array->size, sizeof(size_t), 1, file);
+    fread(array->tuple_list, sizeof(tuple), array->size, file);
 
-    //}//fin leer
+    //show_tuples_list(array);
+    char *data_unzip2 = unzip_data(array);
+    printf("TUPLA DESCOMPRIMIDA 2 -> [%s] LENGTH: [%lu]\n",data_unzip2, strlen(data_unzip2));
+
+
+    // Leer el tamaño del array de tuplas
+    fread(&array->size, sizeof(size_t), 1, file);
+    fread(array->tuple_list, sizeof(tuple), array->size, file);
+
+    //show_tuples_list(array);
+    char *data_unzip3 = unzip_data(array);
+    printf("TUPLA DESCOMPRIMIDA 2 -> [%s] LENGTH: [%lu]\n",data_unzip3, strlen(data_unzip3));*/
+
+    // ************** DEMO FUNCIONA VARIAS TUPLAS *********************
+
 
 
 
     fclose(file);
+    fclose(fileUnziped);
     return array;
 }
 
