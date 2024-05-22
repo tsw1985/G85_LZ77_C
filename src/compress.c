@@ -14,6 +14,9 @@ tuple_array *create_tuple_array(){
         exit(EXIT_FAILURE);
     }
     _tuple_array->size = 0;
+    
+
+
     return _tuple_array;
 }
 
