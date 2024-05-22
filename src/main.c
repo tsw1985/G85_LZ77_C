@@ -16,6 +16,17 @@ int main(int argc, char *argv[])
         start_zip_process(file);
     }
 
+
+    char unzip_file_name[] = "/media/gabriel/1C20FACF20FAAF40/DEVELOPER/C/code/LZ77_C/demotext_ziped.g85";
+    FILE* file_unzip = print_file_info(unzip_file_name);
+    if(NULL != file_unzip){
+        start_unzip_process(file_unzip);
+    }
+
+
+
+
+
     return 0;
 }
 
@@ -59,7 +70,7 @@ int start_zip_process(FILE* file){
         tuple_array *_tuple_to_file = zip_data(_tuples_array, buffer_data);
 
         // Una vez tenemos la tupla, pasamos a guardar esta misma estructura en un fichero de forma binaria
-         show_tuples_list(_tuple_to_file);
+         //show_tuples_list(_tuple_to_file);
 
          if (_tuple_to_file) {
             // Primero escribimos el tamaño de la estructura tuple_array
@@ -88,6 +99,56 @@ int start_zip_process(FILE* file){
 
 }
 
+
+tuple_array *start_unzip_process(FILE *file){
+
+    printf("DESCOMPRIMIENDO !!\n");
+
+    if (!file) {
+        perror("Error al abrir el fichero para lectura");
+        return NULL;
+    }
+
+    tuple_array *array = create_tuple_array();
+
+    // Leer el tamaño del array de tuplas
+    fread(&array->size, sizeof(size_t), 1, file);
+
+    // Asignar memoria para las tuplas
+    array->tuple_list = (tuple *)malloc(array->size * sizeof(tuple));
+    if (array->tuple_list == NULL) {
+        printf("ERROR: malloc() failed for tuple_list\n");
+        free(array);
+        fclose(file);
+        return NULL;
+    }
+
+
+
+    size_t readed_bytes;
+    //empezamos a leer
+    //while ((readed_bytes = fread(buffer_data, sizeof(char), buffer_size, file)) > 0) {
+
+
+
+
+    // Leer las tuplas desde el archivo
+    fread(array->tuple_list, sizeof(tuple), array->size, file);
+
+    //show_tuples_list(array);
+
+    char *data_unzip = unzip_data(array);
+    printf("TUPLA DESCOMPRIMIDA -> [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
+
+
+
+    //}//fin leer
+
+
+
+    fclose(file);
+    return array;
+}
 
 
 

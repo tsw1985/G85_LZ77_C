@@ -1,4 +1,5 @@
 #include "../header/compresor_struct.h"
+#include <stdio.h>
 //Global functions
 tuple_array *create_tuple_array();
 int is_tuple_list_empty(tuple_array *_tuple_array);
@@ -12,3 +13,4 @@ tuple_array *zip_data(tuple_array *_tuples_array,char *data);
 //descompresion functions
 char *unzip_data(tuple_array *_tuple_array);
 char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_positions);
+tuple_array *start_unzip_process(FILE* file);
