@@ -102,6 +102,13 @@ int start_zip_process(FILE* file){
             //fwrite(&_tuple_to_file->size, sizeof(size_t), 1, target_file);
 
             // Luego escribimos las tuplas en sí
+            // **********
+            // aqui hay un error . Hay que guardar en 1 byt el valor
+            // de pasos atras y valores a coger , para que ocupe menos
+            // 0000 0000  . Un byte sacarle dos nibbles.
+            // un nibble sera el total de ir detras y el otro siempre vale 1.
+            // y el tercer byte es el char en si.
+
             fwrite(_tuple_to_file->tuple_list, sizeof(tuple), _tuple_to_file->size, target_file);
          }
         // ---------------- end ZIP DATA -----------------------
