@@ -35,7 +35,7 @@ int start_zip_process(FILE* file){
     fseek(file, 0L, SEEK_SET);
     size_t readed_bytes;
 
-    long buffer_size = 20; // 128 * 1024;
+    long buffer_size = 5; // 128 * 1024;
     printf("BUFFER SIZE: [ %lu ]\n", buffer_size);
     char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
 
@@ -90,6 +90,8 @@ int start_zip_process(FILE* file){
         // ---------------- ZIP DATA -----------------------
         add_firts_element_on_tuple_list(_tuples_array, buffer_data[0]);
         tuple_array *_tuple_to_file = zip_data(_tuples_array, buffer_data);
+        memset(buffer_data,0,readed_bytes);
+        printf("---------------------------\n");
 
          // Una vez tenemos la tupla, pasamos a guardar esta misma estructura en un fichero de forma binaria
          //printf("TUPLA NUMERO [%d]\n",total_tuplas);
