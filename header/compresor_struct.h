@@ -26,3 +26,11 @@ typedef struct
     char *pointer_data_ziped;
      
 } data_ziped_struct;
+
+#pragma pack(push, 1)
+typedef struct
+{
+    char go_back_get_chars;
+    char next_char;   
+} tuple_ziped;
+#pragma pack(pop)

@@ -19,19 +19,11 @@ int main(int argc, char *argv[])
         start_zip_process(file);
     }
 
-
-    
-
     //primero hacer que el comprimido ocupe menos , no mas :)
     /*FILE* file_unzip = print_file_info(unzip_file_name);
     if(NULL != file_unzip){
         start_unzip_process(file_unzip);
     }*/
-
-
-
-
-
     return 0;
 }
 
@@ -43,7 +35,7 @@ int start_zip_process(FILE* file){
     fseek(file, 0L, SEEK_SET);
     size_t readed_bytes;
 
-    long buffer_size = 10; // 128 * 1024;
+    long buffer_size = 20; // 128 * 1024;
     printf("BUFFER SIZE: [ %lu ]\n", buffer_size);
     char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
 
@@ -70,17 +62,23 @@ int start_zip_process(FILE* file){
     }
 
 
+    printf("EN COMPRESION : Se han encontrado %d tuplas\n",total_tuplas);
+
     //me vuelvo a poner en el principio del fichero
     fseek(file, 0L, SEEK_SET);
 
     // Primero escribimos el tamaño de la estructura tuple_array
-    fwrite(&total_tuplas, sizeof(size_t), 1, target_file);
+    //fwrite(&total_tuplas, sizeof(size_t), 1, target_file);
 
 
     total_tuplas = 0;
 
+    tuple_ziped *_tuple_ziped = (tuple_ziped*)malloc(sizeof(tuple_ziped));
+
     while ((readed_bytes = fread(buffer_data, sizeof(char), buffer_size, file)) > 0 ) {
         
+        
+
         //printf("DATOS LEIDOS %s\n",buffer_data);
 
         if (readed_bytes < buffer_size) {
@@ -95,32 +93,18 @@ int start_zip_process(FILE* file){
 
          // Una vez tenemos la tupla, pasamos a guardar esta misma estructura en un fichero de forma binaria
          //printf("TUPLA NUMERO [%d]\n",total_tuplas);
-         //show_tuples_list(_tuple_to_file);
+         show_tuples_list(_tuple_to_file);
 
-         if (_tuple_to_file) {
-            // Primero escribimos el tamaño de la estructura tuple_array
-            //fwrite(&_tuple_to_file->size, sizeof(size_t), 1, target_file);
 
-            // Luego escribimos las tuplas en sí
-            // **********
-            // aqui hay un error . Hay que guardar en 1 byt el valor
-            // de pasos atras y valores a coger , para que ocupe menos
-            // 0000 0000  . Un byte sacarle dos nibbles.
-            // un nibble sera el total de ir detras y el otro siempre vale 1.
-            // y el tercer byte es el char en si.
-
-            fwrite(_tuple_to_file->tuple_list, sizeof(tuple), _tuple_to_file->size, target_file);
-         }
+   
         // ---------------- end ZIP DATA -----------------------
+
+        
 
         // UNZIP
         //char *data_unzip = unzip_data(_tuples_array);
         //printf("-[%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
-        
-        memset(buffer_data,0,readed_bytes);
-
-
-        total_tuplas++;
+        //total_tuplas++;
 
     } // fin while read file
 

@@ -94,11 +94,17 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
                 int go_back_positions = (buffer_index - position_existing_char) ;
                 if(go_back_positions >=0){
                     char next_next_char = buffer[buffer_index+1];
-                    _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
+                    if(next_next_char != '\n'){
+                        _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
+                    }
+                    
                 }
                 
             }else{
-                _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
+                if(next_char != '\n'){
+                    _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
+                }
+                
             }
         }
     }
