@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 char replace = '_';
 //CREATE TUPLE LIST
@@ -180,45 +181,59 @@ char *unzip_data(tuple_array *_tuple_array){
     char_realloc_counter++;
     
     for(int i = 1; i < (_tuple_array->size) ; i++){
-
         if(i >= 1 && i < _tuple_array->size){
 
             tuple_item = _tuple_array->tuple_list[i];
-            
-
-                if(tuple_item.go_back_positions == 0){
-                    //if(tuple_item.next_char != '\n'){
-                        data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
-                        if(data_unziped->pointer_data_unziped==NULL){
-                            printf("ERROR MALLOC() unzip_data() - data_unziped->pointer_data_unziped 1\n");
-                            exit(EXIT_FAILURE);
-                        }
-                        data_unziped->pointer_data_unziped[data_unziped->length] = tuple_item.next_char;
-                        data_unziped->length = data_unziped->length +1;
-                    //}
-
-                }else{
-
-                    char next_char = tuple_item.next_char;
-                    //if(next_char != '\n'){
-                        char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
-
-                        data_unziped->length +=2;
-
-                        data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
-                        if(data_unziped->pointer_data_unziped==NULL){
-                            printf("ERROR MALLOC() unzip_data() - data_unziped->pointer_data_unziped 2\n");
-                            exit(EXIT_FAILURE);
-                        }
-                        data_unziped->pointer_data_unziped[data_unziped->length-2] = picked_char;
-                        data_unziped->pointer_data_unziped[data_unziped->length-1] = next_char;
-                    //}
+            if(tuple_item.go_back_positions == 0){
+                if(byte_is_valid(tuple_item.next_char)){
+                    data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
+                    if(data_unziped->pointer_data_unziped==NULL){
+                        printf("ERROR MALLOC() unzip_data() - data_unziped->pointer_data_unziped 1\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    data_unziped->pointer_data_unziped[data_unziped->length] = tuple_item.next_char;
+                    data_unziped->length = data_unziped->length +1;
                 }
-            
+
+            }else{
+
+                char next_char = tuple_item.next_char;
+                char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
+                if(byte_is_valid(next_char) && byte_is_valid(picked_char)){
+
+                    data_unziped->length +=2;
+                    data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
+
+                    if(data_unziped->pointer_data_unziped==NULL){
+                        printf("ERROR MALLOC() unzip_data() - data_unziped->pointer_data_unziped 2\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    data_unziped->pointer_data_unziped[data_unziped->length-2] = picked_char;
+                    data_unziped->pointer_data_unziped[data_unziped->length-1] = next_char;
+                }
+            }
         }
     }
 
+    clean_return_buffer(data_unziped->pointer_data_unziped);
     return data_unziped->pointer_data_unziped;
+}
+
+
+
+// Función para limpiar la cadena de caracteres basura al final
+void clean_return_buffer(char *buffer) {
+    size_t buffer_length = strlen(buffer);
+    if (buffer_length > 0) {
+        // Eliminar caracteres no válidos al final
+        while (buffer_length > 0 && !byte_is_valid(buffer[buffer_length - 1])) {
+            buffer[--buffer_length] = '\0';
+        }
+    }
+}
+
+int byte_is_valid(char c) {
+    return isprint((unsigned char)c) || isspace((unsigned char)c);
 }
 
 void show_current_chars_readed(data_unziped_struct *data_unziped){

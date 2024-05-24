@@ -13,3 +13,5 @@ tuple_array *zip_data(tuple_array *_tuples_array,char *data);
 //descompresion functions
 char *unzip_data(tuple_array *_tuple_array);
 char get_char_from_data_unziped(data_unziped_struct *data_unziped, int go_back_positions);
+int byte_is_valid(char c);
+void clean_return_buffer(char *cadena);
