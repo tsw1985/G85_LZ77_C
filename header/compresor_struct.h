@@ -27,6 +27,7 @@ typedef struct
      
 } data_ziped_struct;
 
+//Struct to save zip data on file
 #pragma pack(push, 1)
 typedef struct
 {
