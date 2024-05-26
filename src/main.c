@@ -4,6 +4,7 @@
 #include "../header/main.h"
 #include "../header/compress.h"
 
+//DEVELOP PHASE
 char file_name[] = "/home/gabriel/demotext.txt";
 char unzip_file_name[] = "/media/gabriel/1C20FACF20FAAF40/DEVELOPER/C/code/LZ77_C/demotext_ziped.g85";
 
@@ -34,6 +35,7 @@ int start_zip_process(FILE* file){
     long buffer_size = 100; // 128 * 1024;
     printf("BUFFER SIZE: [ %lu ]\n", buffer_size);
     char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
+    memset(buffer_data,0,buffer_size);
 
     tuple_array *_tuples_array = create_tuple_array(); // Creamos objeto para guardar las tuplas
 
@@ -93,6 +95,7 @@ int start_zip_process(FILE* file){
         // ---------------- end ZIP DATA -----------------------
             // UNZIP
         char *data_unzip = unzip_data(_tuples_array);
+        clean_return_buffer(data_unzip);
         printf("- TUPLE UNZIPED: [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
 
         
