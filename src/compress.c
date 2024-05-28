@@ -102,17 +102,11 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
                 int go_back_positions = (buffer_index - position_existing_char) ;
                 if(go_back_positions >=0){
                     char next_next_char = buffer[buffer_index+1];
-                    if(next_next_char != '\n'){
-                        _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
-                    }
-                    
+                    _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
                 }
                 
             }else{
-                if(next_char != '\n'){
                     _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
-                }
-                
             }
         }
     }
@@ -193,12 +187,6 @@ char *unzip_data(tuple_array *_tuple_array){
             tuple_item = _tuple_array->tuple_list[i];
             if(tuple_item.go_back_positions == 0){
 
-                if(tuple_item.next_char == '\r' || tuple_item.next_char == '\n'){
-                    clean_return_buffer(data_unziped->pointer_data_unziped);
-                    return data_unziped->pointer_data_unziped;
-                }
-
-
                 if(byte_is_valid(tuple_item.next_char)){
                     data_unziped->pointer_data_unziped = (char*)realloc(data_unziped->pointer_data_unziped,data_unziped->length * (int)sizeof(char));
                     if(data_unziped->pointer_data_unziped==NULL){
@@ -213,14 +201,6 @@ char *unzip_data(tuple_array *_tuple_array){
 
                 char next_char = tuple_item.next_char;
                 char picked_char = get_char_from_data_unziped(data_unziped , tuple_item.go_back_positions);
-
-
-                if((next_char == '\r' || picked_char == '\n') || (next_char == '\0' || picked_char == '\0')){
-                    clean_return_buffer(data_unziped->pointer_data_unziped);
-                    return data_unziped->pointer_data_unziped;
-                }
-                    
-
 
                 if(byte_is_valid(next_char) && byte_is_valid(picked_char)){
 
