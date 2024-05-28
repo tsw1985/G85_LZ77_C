@@ -4,7 +4,10 @@
 #include <string.h>
 #include <ctype.h>
 
-char replace = '_';
+//const int search_buf    = 1024;
+//const int lookahead_buf = 100; // limited to 255
+#define min(a, b) (a < b ? a : b)
+
 //CREATE TUPLE LIST
 tuple_array *create_tuple_array(){
 
@@ -50,68 +53,44 @@ tuple_array *add_firts_element_on_tuple_list(tuple_array *_tuples_array , char _
 */
 tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
 
-    //Estructura de entrada de datos
-    data_ziped_struct *data_ziped = (data_ziped_struct*)malloc(sizeof(data_ziped_struct));
-    if(data_ziped == NULL){
-        printf("ERROR MALLOC() zip_data() - data_ziped\n");
-        exit(EXIT_FAILURE);
-    }
+    //_tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
 
-    data_ziped->length = 0; // iniciamos la longitud a 0
+    size_t len = strlen(buffer);
 
-    //Array de letras leidas
-    char *current_chars_readed = (char*)malloc(sizeof(char));
-    if(current_chars_readed == NULL){
-        printf("ERROR MALLOC() zip_data() - current_chars_readed\n");
-        exit(EXIT_FAILURE);
-    }
-    //metemos array de letras en la estructura
-    data_ziped->pointer_data_ziped = current_chars_readed;
-    data_ziped->pointer_data_ziped[0] = buffer[0];
-    data_ziped->length = data_ziped->length +1;
+    for(int i = 1; i < len; i++) {
 
-    //le damos ya un espacio grande para que meta las tuplas.
-    long buffer_length = strlen(buffer);
-    data_ziped->pointer_data_ziped = (char*)realloc(data_ziped->pointer_data_ziped , (buffer_length + 1) * sizeof(char));
-    if(data_ziped->pointer_data_ziped == NULL){
-        printf("ERROR REALLOC() zip_data()\n");
-        exit(EXIT_FAILURE);
-    }
+        tuple temp;
+        temp.go_back_positions = 0;
+        temp.get_number_chars = 0;
+        temp.next_char = buffer[i];
 
-
-    //creamos espacios para tuplas tambien
-    _tuple_array->tuple_list = (tuple*)realloc(_tuple_array->tuple_list , buffer_length * sizeof(tuple));
-    if(_tuple_array->tuple_list == NULL){
-        printf("ERROR MALLOC() add_tuple_on_list()\n");
-        exit(EXIT_FAILURE);
-    }
-
-
-    for(int buffer_index = 0 ; buffer_index < buffer_length; buffer_index ++){
-
-        if(buffer_index >= 0 && buffer_index < buffer_length){
-            char current_char = buffer[buffer_index];
-            char next_char = buffer[buffer_index+1];
-
-            data_ziped->length +=2;
-            data_ziped->pointer_data_ziped[buffer_index] = current_char;
-            
-            int position_existing_char = get_position_existing_char_on_current_chars_readed(next_char,data_ziped);
-            if(position_existing_char != -1){
-                buffer_index++;
-                int go_back_positions = (buffer_index - position_existing_char) ;
-                if(go_back_positions >=0){
-                    char next_next_char = buffer[buffer_index+1];
-                    _tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
+        for(int j = i-1; j >= 0 && j >= i-search_buf; j--) {
+            int cx = j;
+            for(int p = i; p < min(i+lookahead_buf, len) && cx < i; p++) {
+                if(buffer[cx] == buffer[p]) {
+                    if(temp.get_number_chars < p-i+1) {
+                        temp.go_back_positions = i-j;
+                        temp.get_number_chars = p-i+1;
+                        temp.next_char = buffer[p+1 >= len ? p : p+1];
+                    }
+                    cx++;
+                } else {
+                    break;
                 }
-                
-            }else{
-                    _tuple_array = add_tuple_on_list(0,0,next_char ,_tuple_array);
             }
         }
+
+        _tuple_array = add_tuple_on_list(temp.go_back_positions, temp.get_number_chars, temp.next_char , _tuple_array);
+        i += temp.get_number_chars ? temp.get_number_chars : 0;
+
+        //_tuple_array->size++;
     }
 
+    
     return _tuple_array;
+
+
+
 }
 
 int get_position_existing_char_on_current_chars_readed(char _char, data_ziped_struct *data_ziped){
@@ -127,6 +106,7 @@ int get_position_existing_char_on_current_chars_readed(char _char, data_ziped_st
 tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , char _next_char , tuple_array *_tuple_array){
     
     _tuple_array->size = _tuple_array->size +1;
+    printf("TUPLA SIZE %d\n",_tuple_array->size);
     tuple tuple_item;
     tuple_item.go_back_positions = _go_back_positions;
     tuple_item.get_number_chars = _get_number_chars;
@@ -147,13 +127,14 @@ int is_tuple_list_empty(tuple_array *_tuple_array){
 void show_tuples_list(tuple_array *_tuples_array){
     for(int i = 0; i < _tuples_array->size ; i++){
         tuple tuple_item = _tuples_array->tuple_list[i];
-        printf("TUPLA : [%d] - go_back_positions: [%d] - get_number_chars[%d] - next_char[%c]\n",i,
+        printf("TUPLA : [%d] - (%d , %d , %c)\n",i,
                                                                                                tuple_item.go_back_positions ,
                                                                                                tuple_item.get_number_chars,
                                                                                                tuple_item.next_char);
     }
 }
 
+//ABRACADABRAPATADECABRAA
 
 char *unzip_data(tuple_array *_tuple_array){
 

@@ -32,10 +32,15 @@ int start_zip_process(FILE* file){
     fseek(file, 0L, SEEK_SET);
     size_t readed_bytes;
 
-    long buffer_size = 100; // 128 * 1024;
-    printf("BUFFER SIZE: [ %lu ]\n", buffer_size);
-    char *buffer_data = (char*)malloc(buffer_size * sizeof(char));
-    memset(buffer_data,0,buffer_size);
+    //long buffer_size = 100; // 128 * 1024;
+
+   
+
+
+
+    printf("BUFFER SIZE: [ %lu ]\n", search_buf);
+    char *buffer_data = (char*)malloc(search_buf * sizeof(char));
+    memset(buffer_data,0,search_buf);
 
     tuple_array *_tuples_array = create_tuple_array(); // Creamos objeto para guardar las tuplas
 
@@ -52,63 +57,38 @@ int start_zip_process(FILE* file){
         return -1;
     }
 
-    // Empezamos a leer el fichero y contamos cuantas tuplas van a haber
-    int total_tuplas = 0;
-
-    while ((readed_bytes = fread(buffer_data, sizeof(char), buffer_size, file)) > 0 ) {
-        total_tuplas++;
-    }
-
-
-    printf("EN COMPRESION : Se han encontrado %d tuplas\n",total_tuplas);
-
     //me vuelvo a poner en el principio del fichero
     fseek(file, 0L, SEEK_SET);
 
-
-    total_tuplas = 0;
-
     tuple_ziped *_tuple_ziped = (tuple_ziped*)malloc(sizeof(tuple_ziped));
-
-    while ((readed_bytes = fread(buffer_data, sizeof(char), buffer_size, file)) > 0 ) {
+    while ((readed_bytes = fread(buffer_data, sizeof(char), search_buf, file)) > 0 ) {
         
         //printf("DATOS LEIDOS %s\n",buffer_data);
 
-        if (readed_bytes < buffer_size) {
+        if (readed_bytes < search_buf) {
             //printf("REDIMENSIONANDO BUFFER_DATA\n");
             buffer_data = (char*)realloc(buffer_data, readed_bytes * sizeof(char));
-            
         }
 
         // ---------------- ZIP DATA -----------------------
         add_firts_element_on_tuple_list(_tuples_array, buffer_data[0]);
-        tuple_array *_tuple_to_file = zip_data(_tuples_array, buffer_data);
+        tuple_array *_tuples_to_unzip = zip_data(_tuples_array, buffer_data);
         memset(buffer_data,0,readed_bytes);
         printf("---------------------------\n");
 
-         // Una vez tenemos la tupla, pasamos a guardar esta misma estructura en un fichero de forma binaria
-         //printf("TUPLA NUMERO [%d]\n",total_tuplas);
-         show_tuples_list(_tuple_to_file);
+        // Una vez tenemos la tupla, pasamos a guardar esta misma estructura en un fichero de forma binaria
+        printf("TUPLA NUMERO [%d]\n",_tuples_to_unzip->size);
+        show_tuples_list(_tuples_to_unzip);
 
-
-   
+  
         // ---------------- end ZIP DATA -----------------------
-            // UNZIP
-        char *data_unzip = unzip_data(_tuples_array);
-        clean_return_buffer(data_unzip);
-        printf("- TUPLE UNZIPED: [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
+        // UNZIP
+        //char *data_unzip = unzip_data(_tuples_array);
+        //clean_return_buffer(data_unzip);
+        //printf("- TUPLE UNZIPED: [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
 
-        
-
-        
-        total_tuplas++;
 
     } // fin while read file
-
-    printf("EL FICHERO TUVO [%d] total de tuplas\n",total_tuplas);
-
-
-
 
     fclose(file);
     fclose(target_file);

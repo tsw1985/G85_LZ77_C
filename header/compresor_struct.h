@@ -35,3 +35,6 @@ typedef struct
     char next_char;   
 } tuple_ziped;
 #pragma pack(pop)
+
+const int search_buf    = 1024;
+const int lookahead_buf = 100; // limited to 255
