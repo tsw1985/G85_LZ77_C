@@ -83,7 +83,11 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
         _tuple_array = add_tuple_on_list(temp.go_back_positions, temp.get_number_chars, temp.next_char , _tuple_array);
         i += temp.get_number_chars ? temp.get_number_chars : 0;
 
-        //_tuple_array->size++;
+        //clean last char
+        if(i == len -1){
+            temp.next_char = ' ';
+        }
+
     }
 
     

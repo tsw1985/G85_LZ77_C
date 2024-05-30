@@ -57,6 +57,11 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-    "compress.h": "c"
+    "compress.h": "c",
+    "compresor_struct.h": "c",
+    "string_view": "c",
+    "__locale": "c",
+    "__string": "c",
+    "string": "c"
   }
 }
