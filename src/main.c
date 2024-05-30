@@ -5,8 +5,8 @@
 #include "../header/compress.h"
 
 //DEVELOP PHASE
-char file_name[] = "/home/gabriel/demotext.txt";
-char unzip_file_name[] = "/media/gabriel/1C20FACF20FAAF40/DEVELOPER/C/code/LZ77_C/demotext_ziped.g85";
+char file_name[] = "/home/gabriel/datos.csv";
+char unzip_file_name[] = "/media/gabriel/1C20FACF20FAAF40/DEVELOPER/C/code/LZ77_C/datos.g85";
 
 //How to compile ? write "make clean ; make" . Later enter to /bin folder and play
 int main(int argc, char *argv[])
@@ -24,23 +24,30 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+size_t file_size(FILE* file){
+    size_t file_size;
+    if(NULL == file){
+        printf("ERROR ! - File not found to get size!\n");
+    }else{
+        fseek(file,0L,SEEK_END);
+        file_size = ftell(file);
+        fseek(file,0L,SEEK_SET);
+    }
+    return file_size;
+}
 
 
 int start_zip_process(FILE* file){
 
     // Ponemos el fichero en el principio y preparamos buffer y variable de bytes leidos
     fseek(file, 0L, SEEK_SET);
-    size_t readed_bytes;
+    size_t readed_bytes = file_size(file);
 
     //long buffer_size = 100; // 128 * 1024;
 
-   
-
-
-
     printf("BUFFER SIZE: [ %lu ]\n", search_buf);
-    char *buffer_data = (char*)malloc(search_buf * sizeof(char));
-    memset(buffer_data,0,search_buf);
+    char *buffer_data = (char*)malloc(readed_bytes * sizeof(char));
+    
 
     tuple_array *_tuples_array = create_tuple_array(); // Creamos objeto para guardar las tuplas
 
@@ -61,14 +68,11 @@ int start_zip_process(FILE* file){
     fseek(file, 0L, SEEK_SET);
 
     tuple_ziped *_tuple_ziped = (tuple_ziped*)malloc(sizeof(tuple_ziped));
-    while ((readed_bytes = fread(buffer_data, sizeof(char), search_buf, file)) > 0 ) {
+    //while ((readed_bytes = fread(buffer_data, sizeof(char), search_buf, file)) > 0 ) {
+
+        fread(buffer_data, sizeof(char), search_buf, file);
         
         //printf("DATOS LEIDOS %s\n",buffer_data);
-
-        if (readed_bytes < search_buf) {
-            //printf("REDIMENSIONANDO BUFFER_DATA\n");
-            buffer_data = (char*)realloc(buffer_data, readed_bytes * sizeof(char));
-        }
 
         // ---------------- ZIP DATA -----------------------
         add_firts_element_on_tuple_list(_tuples_array, buffer_data[0]);
@@ -88,7 +92,7 @@ int start_zip_process(FILE* file){
         //printf("- TUPLE UNZIPED: [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
 
 
-    } // fin while read file
+    //} // fin while read file
 
     fclose(file);
     fclose(target_file);
