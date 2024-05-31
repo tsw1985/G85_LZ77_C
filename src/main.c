@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
                 switch (argv[2][1]){
                     case 'c':{
-                        printf("_-: Starting compression :-_\n");
+                        printf("- [ INFO ] - Starting compression ...\n");
                         start_zip_process(file,file_name);
                         break;
                     }
@@ -45,26 +45,17 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-size_t file_size(FILE* file){
-    size_t file_size;
-    if(NULL == file){
-        printf("ERROR ! - File not found to get size!\n");
-    }else{
-        fseek(file,0L,SEEK_END);
-        file_size = ftell(file);
-        fseek(file,0L,SEEK_SET);
-    }
-    return file_size;
-}
+
 
 
 int start_zip_process(FILE* file , char* file_name){
 
     fseek(file, 0L, SEEK_SET);
-    size_t readed_bytes = file_size(file);
+    size_t file_size_bytes = file_size(file);
+    printf("- [ INFO ] - File size: [ %d ] bytes\n", file_size_bytes);
+    printf("- [ INFO ] - Search buffer size: [ %d ] bytes\n", search_buf);
 
-    printf(" - BUFFER SIZE: [ %d ]\n", search_buf);
-    char *buffer_data = (char*)malloc(readed_bytes * sizeof(char));
+    char *buffer_data = (char*)malloc(file_size_bytes * sizeof(char));
     
     tuple_array *_tuples_array = create_tuple_array(); // Creamos objeto para guardar las tuplas
 
@@ -86,15 +77,15 @@ int start_zip_process(FILE* file , char* file_name){
 
     tuple_ziped *_tuple_ziped = (tuple_ziped*)malloc(sizeof(tuple_ziped));
 
-    fread(buffer_data, sizeof(char), readed_bytes, file);
+    fread(buffer_data, sizeof(char), file_size_bytes, file);
 
     // ---------------- ZIP DATA -----------------------
     add_firts_element_on_tuple_list(_tuples_array, buffer_data[0]);
     tuple_array *_tuples_to_unzip = zip_data(_tuples_array, buffer_data);
 
     // Una vez tenemos la tupla, pasamos a guardar esta misma estructura en un fichero de forma binaria
-    //printf("TUPLA NUMERO [%d]\n",_tuples_to_unzip->size);
-    show_tuples_list(_tuples_to_unzip);
+    printf("- [ INFO ] - Tuples to write: [ %d ]\n",_tuples_to_unzip->size);
+    //show_tuples_list(_tuples_to_unzip);
 
 
     fclose(file);
@@ -110,9 +101,9 @@ int start_zip_process(FILE* file , char* file_name){
 
 void print_head_info(){
     printf("****************************************************************************************************\n");
-    printf(" Welcome to G85Zip:\n");
-    printf(" - Zip   : g85 'yourfile.xxx' -zip\n");
-    printf(" - Unzip : g85 yourfile.g85 -unzip\n");
+    printf(" - G85Zip:\n");
+    printf("   - Zip   : g85 'yourfile.xxx' -zip\n");
+    printf("   - Unzip : g85 yourfile.g85 -unzip\n");
     printf("****************************************************************************************************\n");
 }
 
@@ -121,11 +112,19 @@ FILE* print_file_info(char* file_name){
     if(NULL == file){
         printf("ERROR ! - File not found!\n");
     }else{
-        printf("SUCCESS ! - File founded!\n");
-        fseek(file,0L,SEEK_END);
-        unsigned long file_size = ftell(file);
-        printf("File size : %lu bytes\n",file_size);
-        fseek(file,0L,SEEK_SET);
+        printf("- [ INFO ] - File to zip : %s\n",file_name);
     }
     return file;
+}
+
+size_t file_size(FILE* file){
+    size_t file_size;
+    if(NULL == file){
+        printf("ERROR ! - File not found to get size!\n");
+    }else{
+        fseek(file,0L,SEEK_END);
+        file_size = ftell(file);
+        fseek(file,0L,SEEK_SET);
+    }
+    return file_size;
 }
