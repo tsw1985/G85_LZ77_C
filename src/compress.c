@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-
-//const int search_buf    = 1024;
-//const int lookahead_buf = 100; // limited to 255
 #define min(a, b) (a < b ? a : b)
 
 //CREATE TUPLE LIST
@@ -27,9 +24,8 @@ tuple_array create_tuple_array(){
 
 tuple_array zip_data(char *buffer , int len){
 
-    //_tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
-
     //Tuple array to save the buffer data on tuples ( the data is "ziped" on tuples )
+    printf("- [ INFO ] - Please wait ...\n");
     tuple_array _tuple_array = create_tuple_array(); 
 
     //add first byte (first tuple);
@@ -39,9 +35,6 @@ tuple_array zip_data(char *buffer , int len){
     tuple_item.next_char = buffer[0];
 
     add_tuple_on_list(tuple_item.go_back_positions, tuple_item.get_number_chars, tuple_item.next_char , &_tuple_array);
-
-
-    //size_t len = strlen(buffer);
 
     for(int i = 1; i < len; i++) {
 
@@ -68,19 +61,16 @@ tuple_array zip_data(char *buffer , int len){
 
         add_tuple_on_list(temp.go_back_positions, temp.get_number_chars, temp.next_char , &_tuple_array);
         i += temp.get_number_chars ? temp.get_number_chars : 0;
-
     }
 
     return _tuple_array;
-
 }
+
+
 
 void add_tuple_on_list(unsigned short _go_back_positions, int _get_number_chars , char _next_char , tuple_array *_tuple_array){
     
-    //printf("VALOR DE SIZE %d\n",_tuple_array->size);
-
     //while the capacity of the list is less than his limit ...
-    
     if(_tuple_array->size < _tuple_array->capacity){
 
         tuple tuple_item;
@@ -91,8 +81,6 @@ void add_tuple_on_list(unsigned short _go_back_positions, int _get_number_chars 
 
     }else{
 
-        printf("ENTRANDO POR REDIMENSION [%i]\n",_tuple_array->capacity);
-        
         //if the limit is passed. We need more space. So we create a new space on memory.
         tuple *_tuple_array_resized = (tuple*)malloc(sizeof(tuple) * _tuple_array->capacity * 2);
         if(_tuple_array_resized == NULL){
@@ -109,8 +97,8 @@ void add_tuple_on_list(unsigned short _go_back_positions, int _get_number_chars 
 
             tuple tuple_item;
             tuple_item.go_back_positions = _go_back_positions;
-            tuple_item.get_number_chars = _get_number_chars;
-            tuple_item.next_char = _next_char;
+            tuple_item.get_number_chars  = _get_number_chars;
+            tuple_item.next_char         = _next_char;
 
             _tuple_array->capacity                 = _tuple_array->capacity * 2;
             _tuple_array->tuple_list               = _tuple_array_resized;
@@ -118,21 +106,25 @@ void add_tuple_on_list(unsigned short _go_back_positions, int _get_number_chars 
         }
     }
 
-    _tuple_array->size = _tuple_array->size +1;
+    _tuple_array->size++;
 
 }
 
-void show_tuples_list(tuple_array *_tuples_array){
-    for(int i = 0; i < _tuples_array->size ; i++){
-        tuple tuple_item = _tuples_array->tuple_list[i];
-        printf("TUPLA : [%d] - (%d , %d , %c)\n",i,
-                                                                                               tuple_item.go_back_positions ,
-                                                                                               tuple_item.get_number_chars,
-                                                                                               tuple_item.next_char);
+void show_tuples_list(tuple_array _tuples_array){
+
+    for(size_t i = 0; i < _tuples_array.size ; i++){
+        tuple tuple_item = _tuples_array.tuple_list[i];
+        printf("- [ INFO ] - TUPLE : [%d] - (%d , %d , %c)\n",i,
+                        tuple_item.go_back_positions ,
+                        tuple_item.get_number_chars,
+                        tuple_item.next_char);
     }
 }
 
-//ABRACADABRAPATADECABRAA
+
+
+
+
 
 char *unzip_data(tuple_array *_tuple_array){
 

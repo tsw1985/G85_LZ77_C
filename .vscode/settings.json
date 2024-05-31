@@ -62,6 +62,8 @@
     "string_view": "c",
     "__locale": "c",
     "__string": "c",
-    "string": "c"
+    "string": "c",
+    "random": "c",
+    "algorithm": "c"
   }
 }
