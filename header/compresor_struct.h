@@ -1,5 +1,5 @@
 //Struct tuple
-typedef struct
+typedef struct tuple
 {
     unsigned short go_back_positions;
     char get_number_chars;
@@ -10,7 +10,8 @@ typedef struct
 typedef struct 
 {
     tuple *tuple_list;
-    long size;
+    int size;
+    int capacity;
 } tuple_array;
 
 typedef struct
