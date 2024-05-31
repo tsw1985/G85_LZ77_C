@@ -86,7 +86,7 @@ int start_zip_process(FILE* file , char* file_name){
 
     tuple_ziped *_tuple_ziped = (tuple_ziped*)malloc(sizeof(tuple_ziped));
 
-    fread(buffer_data, sizeof(char), search_buf, file);
+    fread(buffer_data, sizeof(char), readed_bytes, file);
 
     // ---------------- ZIP DATA -----------------------
     add_firts_element_on_tuple_list(_tuples_array, buffer_data[0]);

@@ -51,16 +51,16 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
 
     size_t len = strlen(buffer);
 
-    for(size_t i = 1; i < len; i++) {
+    for(int i = 1; i < len; i++) {
 
         tuple temp;
         temp.go_back_positions = 0;
         temp.get_number_chars = 0;
         temp.next_char = buffer[i];
 
-        for(size_t j = i-1; j >= 0 && j >= i-search_buf; j--) {
+        for(int j = i-1; j >= 0 && j >= i-search_buf; j--) {
             int cx = j;
-            for(size_t p = i; p < min(i+lookahead_buf, len) && cx < i; p++) {
+            for(int p = i; p < min(i+lookahead_buf, len) && cx < i; p++) {
                 if(buffer[cx] == buffer[p]) {
                     if(temp.get_number_chars < p-i+1) {
                         temp.go_back_positions = i-j;
