@@ -4,23 +4,44 @@
 #include "../header/main.h"
 #include "../header/compress.h"
 
-//DEVELOP PHASE
-char file_name[] = "/home/gabriel/datos.csv";
-char unzip_file_name[] = "/media/gabriel/1C20FACF20FAAF40/DEVELOPER/C/code/LZ77_C/datos.g85";
 
 //How to compile ? write "make clean ; make" . Later enter to /bin folder and play
 int main(int argc, char *argv[])
 {
 
-    print_head_info();
-
+   print_head_info();
     
-    FILE* file = print_file_info(file_name);
-    if(NULL != file){
-        start_zip_process(file);
+
+    if (argc < 2){
+        printf("Usage to zip   : g85zip path/your/file.ext -c\n");
+        printf("Usage to unzip : g85zip path/your/file.g85z -d\n");
+    }else{
+
+        char *file_name = (char*)malloc(strlen(argv[1] + 1));
+        strcpy(file_name,argv[1]);
+        FILE* file = print_file_info(file_name);
+        if(NULL != file){
+
+            if(argv[2][0] == '-') {
+
+                switch (argv[2][1]){
+                    case 'c':{
+                        printf("_-: Starting compression :-_\n");
+                        start_zip_process(file,file_name);
+                        break;
+                    }
+
+                    case 'd':{
+                        printf("_-: Starting descompression :-_\n");
+                        
+                        break;
+                    }
+                }
+
+             }
+        }
     }
 
-    //TODO UNZIP PROCESS HERE
     return 0;
 }
 
@@ -37,18 +58,14 @@ size_t file_size(FILE* file){
 }
 
 
-int start_zip_process(FILE* file){
+int start_zip_process(FILE* file , char* file_name){
 
-    // Ponemos el fichero en el principio y preparamos buffer y variable de bytes leidos
     fseek(file, 0L, SEEK_SET);
     size_t readed_bytes = file_size(file);
 
-    //long buffer_size = 100; // 128 * 1024;
-
-    printf("BUFFER SIZE: [ %lu ]\n", search_buf);
+    printf(" - BUFFER SIZE: [ %d ]\n", search_buf);
     char *buffer_data = (char*)malloc(readed_bytes * sizeof(char));
     
-
     tuple_array *_tuples_array = create_tuple_array(); // Creamos objeto para guardar las tuplas
 
     int first_time = 0; // Variable para controlar y guardar el primer byte leido del fichero
@@ -68,31 +85,17 @@ int start_zip_process(FILE* file){
     fseek(file, 0L, SEEK_SET);
 
     tuple_ziped *_tuple_ziped = (tuple_ziped*)malloc(sizeof(tuple_ziped));
-    //while ((readed_bytes = fread(buffer_data, sizeof(char), search_buf, file)) > 0 ) {
 
-        fread(buffer_data, sizeof(char), search_buf, file);
-        
-        //printf("DATOS LEIDOS %s\n",buffer_data);
+    fread(buffer_data, sizeof(char), search_buf, file);
 
-        // ---------------- ZIP DATA -----------------------
-        add_firts_element_on_tuple_list(_tuples_array, buffer_data[0]);
-        tuple_array *_tuples_to_unzip = zip_data(_tuples_array, buffer_data);
-        memset(buffer_data,0,readed_bytes);
-        printf("---------------------------\n");
+    // ---------------- ZIP DATA -----------------------
+    add_firts_element_on_tuple_list(_tuples_array, buffer_data[0]);
+    tuple_array *_tuples_to_unzip = zip_data(_tuples_array, buffer_data);
 
-        // Una vez tenemos la tupla, pasamos a guardar esta misma estructura en un fichero de forma binaria
-        printf("TUPLA NUMERO [%d]\n",_tuples_to_unzip->size);
-        show_tuples_list(_tuples_to_unzip);
+    // Una vez tenemos la tupla, pasamos a guardar esta misma estructura en un fichero de forma binaria
+    //printf("TUPLA NUMERO [%d]\n",_tuples_to_unzip->size);
+    show_tuples_list(_tuples_to_unzip);
 
-  
-        // ---------------- end ZIP DATA -----------------------
-        // UNZIP
-        //char *data_unzip = unzip_data(_tuples_array);
-        //clean_return_buffer(data_unzip);
-        //printf("- TUPLE UNZIPED: [%s] LENGTH: [%lu]\n",data_unzip, strlen(data_unzip));
-
-
-    //} // fin while read file
 
     fclose(file);
     fclose(target_file);

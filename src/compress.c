@@ -45,28 +45,22 @@ tuple_array *add_firts_element_on_tuple_list(tuple_array *_tuples_array , char _
 }
 
 
-
-/*
-    Cuando hay \n \r en las tuplas , se vuelve medio loco esto
-    habria que hacer un split por saltos de linea antes de enviar
-    las tuplas a comprimir y asi quiza se vaya el problema
-*/
 tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
 
     //_tuple_array = add_tuple_on_list(go_back_positions, 1, next_next_char, _tuple_array);
 
     size_t len = strlen(buffer);
 
-    for(int i = 1; i < len; i++) {
+    for(size_t i = 1; i < len; i++) {
 
         tuple temp;
         temp.go_back_positions = 0;
         temp.get_number_chars = 0;
         temp.next_char = buffer[i];
 
-        for(int j = i-1; j >= 0 && j >= i-search_buf; j--) {
+        for(size_t j = i-1; j >= 0 && j >= i-search_buf; j--) {
             int cx = j;
-            for(int p = i; p < min(i+lookahead_buf, len) && cx < i; p++) {
+            for(size_t p = i; p < min(i+lookahead_buf, len) && cx < i; p++) {
                 if(buffer[cx] == buffer[p]) {
                     if(temp.get_number_chars < p-i+1) {
                         temp.go_back_positions = i-j;
@@ -83,17 +77,9 @@ tuple_array *zip_data(tuple_array *_tuple_array, char *buffer){
         _tuple_array = add_tuple_on_list(temp.go_back_positions, temp.get_number_chars, temp.next_char , _tuple_array);
         i += temp.get_number_chars ? temp.get_number_chars : 0;
 
-        //clean last char
-        if(i == len -1){
-            temp.next_char = ' ';
-        }
-
     }
 
-    
     return _tuple_array;
-
-
 
 }
 
@@ -110,7 +96,6 @@ int get_position_existing_char_on_current_chars_readed(char _char, data_ziped_st
 tuple_array *add_tuple_on_list(int _go_back_positions, int _get_number_chars , char _next_char , tuple_array *_tuple_array){
     
     _tuple_array->size = _tuple_array->size +1;
-    printf("TUPLA SIZE %d\n",_tuple_array->size);
     tuple tuple_item;
     tuple_item.go_back_positions = _go_back_positions;
     tuple_item.get_number_chars = _get_number_chars;

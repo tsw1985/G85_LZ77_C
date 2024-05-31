@@ -1,8 +1,8 @@
 //Struct tuple
 typedef struct
 {
-    int go_back_positions;
-    int get_number_chars;
+    unsigned short go_back_positions;
+    char get_number_chars;
     char next_char;   
 } tuple;
 
