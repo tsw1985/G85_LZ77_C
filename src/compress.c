@@ -123,12 +123,14 @@ void show_tuples_list(tuple_array _tuples_array){
 
 
 
-
-
-
-char *unzip_data(tuple_array *_tuple_array){
+void unzip_data(char *file_name){
 
     data_unziped_struct *data_unziped;
+    FILE* file_to_unzip = fopen(strcat(file_name,".g85"), "rb");
+    if(NULL == file_to_unzip){
+        printf("ERROR ! - File not found!\n");
+    }
+    fclose(file_to_unzip);
+   
     
-    return data_unziped->pointer_data_unziped;
 }

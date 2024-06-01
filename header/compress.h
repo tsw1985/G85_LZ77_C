@@ -7,5 +7,5 @@ void show_tuples_list(tuple_array _tuples_array);
 //compresion functions
 tuple_array zip_data(char *data , int length_bytes);
 //descompresion functions
-char *unzip_data(tuple_array *_tuple_array);
-void print_loading();
+void unzip_data(tuple_array *_tuple_array);
+void* print_loading(char *file_name);
