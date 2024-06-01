@@ -14,6 +14,14 @@ typedef struct
     int capacity;
 } tuple_array;
 
+
+typedef struct decompressed_bytes {
+    char* buf;
+    int   capacity;
+    int   len;
+} decompressed_bytes;
+
+
 typedef struct
 {
     int length;

@@ -9,14 +9,20 @@
 
 volatile int STOP_SPINNER = 0;
 
-#define DEBUG_ON 1
-#define DEBUG_OFF 0
+#define ON 1
+#define OFF 0
+
+#define DEBUG_ZIP 0 //0 unzip
+#define ZIP 0
+#define UNZIP 1
+
 
 
 int main(int argc, char *argv[])
 {
 
-    int DEBUG_MODE = DEBUG_ON;
+    int DEBUG_MODE = ON;
+    int ZIP_MODE = UNZIP;
 
     pthread_t spinner_thread;
 
@@ -24,62 +30,91 @@ int main(int argc, char *argv[])
     pthread_create(&spinner_thread, NULL, print_loading, NULL);
 
 
-    print_head_info();
+    
     char *file_name;
 
-    if (DEBUG_MODE == DEBUG_OFF && argc < 2){
+    if (DEBUG_MODE == OFF && argc < 2){
         printf("Usage to zip   : g85zip path/your/file.ext -c\n");
         printf("Usage to unzip : g85zip path/your/file.g85z -d\n");
     }else{
 
         
-        if(DEBUG_MODE == 1){
-            printf("[ *** INFO *** ] - DEBUG MODE ENABLED\n");
-            char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
-            //char *file_name_debug = "/home/gabriel/demotext.txt";
-            file_name = (char*)malloc(strlen(file_name_debug) * sizeof(char));
-            strcpy(file_name,file_name_debug);
-        }else{
-            file_name = (char*)malloc(strlen(argv[1] + 1));
-            strcpy(file_name,argv[1]);
-        }
-        
-        FILE* file = print_file_info(file_name);
-        if(NULL != file){
+            if(DEBUG_MODE == ON){
+
+                if(ZIP_MODE == ZIP){
+
+                    printf("[ *** INFO *** ] - DEBUG MODE ENABLED\n");
+                    //char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
+                    char *file_name_debug = "/home/gabriel/demotext.txt";
+                    file_name = (char*)malloc(strlen(file_name_debug) * sizeof(char));
+                    strcpy(file_name,file_name_debug);
+
+                }else if(ZIP_MODE == UNZIP){ //unzip
+
+                    printf("[ *** INFO *** ] - DEBUG MODE ENABLED\n");
+                    printf("- [ INFO ] - Starting descompression ...\n");
+
+                    //char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
+                    char *file_name_debug = "/home/gabriel/demotext.txt";
+                    unzip_data(file_name_debug);
+
+                    //pthread_create(&spinner_thread, NULL, print_loading, NULL);
+                    //STOP_SPINNER = 1;
+                    //pthread_join(spinner_thread, NULL);
+                }
+                
+            }else if(DEBUG_MODE == OFF){
+
+                file_name = (char*)malloc(strlen(argv[1] + 1));
+                strcpy(file_name,argv[1]);
+            
+            
+                FILE* file = print_file_info(file_name);
+                if(NULL != file){
 
 
-            if(DEBUG_MODE == DEBUG_ON){
-                printf("- [ DEBUG ] - Starting compression ...\n");
-                // Crear el hilo para la animación de carga
-                pthread_create(&spinner_thread, NULL, print_loading, NULL);
-                start_zip_process(file,file_name);
-                // Esperar a que el hilo de la animación termine
-                STOP_SPINNER = 1;
-                pthread_join(spinner_thread, NULL);
-
-            }else{
-
-                if(argv[2][0] == '-') {
-
-                switch (argv[2][1]){
-                    case 'c':{
-                        printf("- [ INFO ] - Starting compression ...\n");
+                    if(DEBUG_MODE == ON){
+                        printf("- [ DEBUG ] - Starting compression ...\n");
+                        // Crear el hilo para la animación de carga
+                        pthread_create(&spinner_thread, NULL, print_loading, NULL);
                         start_zip_process(file,file_name);
-                        break;
-                    }
+                        // Esperar a que el hilo de la animación termine
+                        STOP_SPINNER = 1;
+                        pthread_join(spinner_thread, NULL);
 
-                    case 'd':{
-                        printf("_-: Starting descompression :-_\n");
-                        
-                        break;
+                    }else if(DEBUG_MODE == OFF){
+
+                        if(argv[2][0] == '-') {
+
+                        switch (argv[2][1]){
+                            case 'c':{
+                                print_head_info();
+                                printf("- [ INFO ] - Starting Compression ...\n");
+                                start_zip_process(file,file_name);
+                                pthread_create(&spinner_thread, NULL, print_loading, NULL);
+                                STOP_SPINNER = 1;
+                                pthread_join(spinner_thread, NULL);
+                                break;
+                            }
+
+                            case 'd':{
+                                print_head_info();
+                                printf("- [ INFO ] - Starting Descompression ...\n");
+                                unzip_data(file_name);
+                                //pthread_create(&spinner_thread, NULL, print_loading, NULL);
+                                //STOP_SPINNER = 1;
+                                //pthread_join(spinner_thread, NULL);
+                                break;
+                            }
+                        }
+
                     }
                 }
-
-             }
             }
-        }
 
-        fclose(file);
+            fclose(file);
+
+        }
     }
 
     return 0;
@@ -129,7 +164,6 @@ void* print_loading(void* arg) {
         printf("\r%c", spinner[i]);
         fflush(stdout);
         i = (i + 1) % 4;
-        //usleep(100000); // Retardo de 100 milisegundos
     }
 
     return NULL;
@@ -143,7 +177,7 @@ FILE* print_file_info(char* file_name){
     printf("- [ INFO ] - File to zip : %s\n",file_name);
     FILE* file = fopen(file_name, "rb");
     if(NULL == file){
-        printf("ERROR ! - File not found!\n");
+        printf("ERROR print_file_info() ! - File not found!\n");
     }
     return file;
 }

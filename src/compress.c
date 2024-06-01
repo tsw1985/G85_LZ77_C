@@ -125,12 +125,105 @@ void show_tuples_list(tuple_array _tuples_array){
 
 void unzip_data(char *file_name){
 
+    printf("- [ INFO ] - File %s founded ...\n",file_name);
+
     data_unziped_struct *data_unziped;
-    FILE* file_to_unzip = fopen(strcat(file_name,".g85"), "rb");
+    char *new_name_file_to_unzip = (char*)malloc(sizeof(file_name) + 500);
+    strcpy(new_name_file_to_unzip, file_name);
+    strcat(new_name_file_to_unzip,".g85");
+
+    FILE* file_to_unzip = fopen(new_name_file_to_unzip , "rb");
     if(NULL == file_to_unzip){
-        printf("ERROR ! - File not found!\n");
+        printf("ERROR ! - File to unzip not found!\n");
+    }else{
+
+        printf("- [ INFO ] - Opening ziped file to get data ...\n");
+
+        
+
+        //get file size
+        fseek(file_to_unzip, 0L, SEEK_END);
+        int len = ftell(file_to_unzip);
+        rewind(file_to_unzip);
+
+
+        
+        char *buf = (char*)malloc(sizeof(char) * len);
+        //read all data to unzip
+        fread(buf, len, 1, file_to_unzip);
+
+        
+        //start decompress data process
+        decompressed_bytes arr;
+        arr.buf       = (char*)malloc(sizeof(char) * search_buf);
+        arr.len       = 0;
+        arr.capacity  = search_buf;
+
+
+        tuple aux;
+        for(int i = 0; i < len; i += 4) {
+            memcpy(&aux, buf+i, sizeof(tuple));
+            if(aux.get_number_chars == 0) {
+                insert(&arr, aux.next_char);
+            } else {
+                int ax = arr.len;
+                for(int i = 0; i < aux.get_number_chars; i++) {
+                    insert(&arr, arr.buf[ax-aux.go_back_positions+i]);
+                }
+
+                if(i+4 < len && aux.get_number_chars > 0)
+                    insert(&arr, aux.next_char);
+            }
+        }
+
+        //write_binary(arr.buf, arr.len, out);
+
+        string_remove(new_name_file_to_unzip,".g85");
+        FILE* file_to_write_original_unziped = fopen(new_name_file_to_unzip, "wb");
+        if(file_to_write_original_unziped == NULL) {
+            printf("[  ERROR ] - Error creating output unziped file\n");
+            exit(0);
+        }
+
+        //write all data on output file
+        fwrite(arr.buf, len, 1, file_to_write_original_unziped);
+        fclose(file_to_write_original_unziped);
+        free(arr.buf);
+        
     }
+
+    free(new_name_file_to_unzip);
     fclose(file_to_unzip);
-   
-    
+}
+
+void string_remove(char *str, const char *substr) {
+    char *ptr = strstr(str, substr);
+    if (ptr != NULL) {
+        memmove(ptr, ptr + strlen(substr), strlen(ptr + strlen(substr)) + 1);
+    }
+}
+
+
+void insert(decompressed_bytes* arr, char data) {
+    if(arr->len < arr->capacity) {
+        arr->buf[arr->len] = data;
+    } else {
+        // double capacity
+        char* resized_buf = (char*)malloc(sizeof(char) * arr->capacity * 2);
+
+        // copy data to new buff
+        for(int i = 0; i < arr->capacity; i++) {
+            resized_buf[i] = arr->buf[i];
+        }
+
+        // free old data buf
+        free(arr->buf);
+
+        // updating new capacity
+        arr->capacity      = arr->capacity * 2;
+        arr->buf           = resized_buf;
+		arr->buf[arr->len] = data;
+    }
+
+    arr->len++;
 }

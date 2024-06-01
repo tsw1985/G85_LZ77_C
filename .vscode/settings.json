@@ -64,6 +64,7 @@
     "__string": "c",
     "string": "c",
     "random": "c",
-    "algorithm": "c"
+    "algorithm": "c",
+    "ios": "c"
   }
 }
