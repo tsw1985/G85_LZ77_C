@@ -2,9 +2,11 @@
 make clean
 make
 
-# compresion
-./bin/g85zip /home/gabriel/demotext.txt -c
 
+./bin/g85zip
+
+# compresion
+# ./bin/g85zip /home/gabriel/demotext.txt -c
 
 # descompresion
 # ./bin/g85zip /home/gabriel/demotext.txt -d

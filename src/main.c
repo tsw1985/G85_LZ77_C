@@ -28,11 +28,8 @@ int main(int argc, char *argv[])
 
     // Crear el hilo para la animación de carga
     pthread_create(&spinner_thread, NULL, print_loading, NULL);
-
-
-    
+  
     char *file_name;
-
     if (DEBUG_MODE == OFF && argc < 2){
         printf("Usage to zip   : g85zip path/your/file.ext -c\n");
         printf("Usage to unzip : g85zip path/your/file.g85z -d\n");
@@ -43,24 +40,35 @@ int main(int argc, char *argv[])
 
                 if(ZIP_MODE == ZIP){
 
+
+
                     printf("[ *** INFO *** ] - DEBUG MODE ENABLED\n");
-                    //char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
-                    char *file_name_debug = "/home/gabriel/demotext.txt";
+                    char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
+                    //char *file_name_debug = "/home/gabriel/demotext.txt";
                     file_name = (char*)malloc(strlen(file_name_debug) * sizeof(char));
                     strcpy(file_name,file_name_debug);
+
+                    FILE* file = print_file_info(file_name);
+                    if(NULL != file){
+                        start_zip_process(file,file_name);
+                        pthread_create(&spinner_thread, NULL, print_loading, NULL);
+                        STOP_SPINNER = 1;
+                        pthread_join(spinner_thread, NULL);
+                    }
+
 
                 }else if(ZIP_MODE == UNZIP){ //unzip
 
                     printf("[ *** INFO *** ] - DEBUG MODE ENABLED\n");
                     printf("- [ INFO ] - Starting descompression ...\n");
 
-                    //char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
-                    char *file_name_debug = "/home/gabriel/demotext.txt";
+                    char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
+                    //char *file_name_debug = "/home/gabriel/demotext.txt";
                     unzip_data(file_name_debug);
 
-                    //pthread_create(&spinner_thread, NULL, print_loading, NULL);
-                    //STOP_SPINNER = 1;
-                    //pthread_join(spinner_thread, NULL);
+                    pthread_create(&spinner_thread, NULL, print_loading, NULL);
+                    STOP_SPINNER = 1;
+                    pthread_join(spinner_thread, NULL);
                 }
                 
             }else if(DEBUG_MODE == OFF){
