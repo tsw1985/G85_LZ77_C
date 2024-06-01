@@ -138,15 +138,10 @@ void unzip_data(char *file_name){
     }else{
 
         printf("- [ INFO ] - Opening ziped file to get data ...\n");
-
-        
-
         //get file size
         fseek(file_to_unzip, 0L, SEEK_END);
         int len = ftell(file_to_unzip);
         rewind(file_to_unzip);
-
-
         
         char *buf = (char*)malloc(sizeof(char) * len);
         //read all data to unzip
@@ -176,8 +171,6 @@ void unzip_data(char *file_name){
             }
         }
 
-        //write_binary(arr.buf, arr.len, out);
-
         string_remove(new_name_file_to_unzip,".g85");
         FILE* file_to_write_original_unziped = fopen(new_name_file_to_unzip, "wb");
         if(file_to_write_original_unziped == NULL) {
@@ -186,7 +179,7 @@ void unzip_data(char *file_name){
         }
 
         //write all data on output file
-        fwrite(arr.buf, len, 1, file_to_write_original_unziped);
+        fwrite(arr.buf, arr.len, 1, file_to_write_original_unziped);
         fclose(file_to_write_original_unziped);
         free(arr.buf);
         
