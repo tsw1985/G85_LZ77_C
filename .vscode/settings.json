@@ -65,6 +65,9 @@
     "string": "c",
     "random": "c",
     "algorithm": "c",
-    "ios": "c"
+    "ios": "c",
+    "vector": "c",
+    "__bit_reference": "c",
+    "__split_buffer": "c"
   }
 }

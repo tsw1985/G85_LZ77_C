@@ -149,28 +149,29 @@ void unzip_data(char *file_name){
 
         
         //start decompress data process
-        decompressed_bytes arr;
-        arr.buf       = (char*)malloc(sizeof(char) * search_buf);
-        arr.len       = 0;
-        arr.capacity  = search_buf;
+        decompressed_bytes bytes_data;
+        bytes_data.buf       = (char*)malloc(sizeof(char) * search_buf);
+        bytes_data.len       = 0;
+        bytes_data.capacity  = search_buf;
 
 
         tuple aux;
         for(int i = 0; i < len; i += 4) {
             memcpy(&aux, buf+i, sizeof(tuple));
             if(aux.get_number_chars == 0) {
-                insert(&arr, aux.next_char);
+                insert(&bytes_data, aux.next_char);
             } else {
-                int ax = arr.len;
+                int ax = bytes_data.len;
                 for(int i = 0; i < aux.get_number_chars; i++) {
-                    insert(&arr, arr.buf[ax-aux.go_back_positions+i]);
+                    insert(&bytes_data, bytes_data.buf[ax-aux.go_back_positions+i]);
                 }
 
                 if(i+4 < len && aux.get_number_chars > 0)
-                    insert(&arr, aux.next_char);
+                    insert(&bytes_data, aux.next_char);
             }
         }
 
+        //when all is descompressed... create the original file
         string_remove(new_name_file_to_unzip,".g85");
         FILE* file_to_write_original_unziped = fopen(new_name_file_to_unzip, "wb");
         if(file_to_write_original_unziped == NULL) {
@@ -179,9 +180,9 @@ void unzip_data(char *file_name){
         }
 
         //write all data on output file
-        fwrite(arr.buf, arr.len, 1, file_to_write_original_unziped);
+        fwrite(bytes_data.buf, bytes_data.len, 1, file_to_write_original_unziped);
         fclose(file_to_write_original_unziped);
-        free(arr.buf);
+        free(bytes_data.buf);
         
     }
 
@@ -197,26 +198,26 @@ void string_remove(char *str, const char *substr) {
 }
 
 
-void insert(decompressed_bytes* arr, char data) {
-    if(arr->len < arr->capacity) {
-        arr->buf[arr->len] = data;
+void insert(decompressed_bytes* bytes_data, char data) {
+    if(bytes_data->len < bytes_data->capacity) {
+        bytes_data->buf[bytes_data->len] = data;
     } else {
         // double capacity
-        char* resized_buf = (char*)malloc(sizeof(char) * arr->capacity * 2);
+        char* resized_buf = (char*)malloc(sizeof(char) * bytes_data->capacity * 2);
 
         // copy data to new buff
-        for(int i = 0; i < arr->capacity; i++) {
-            resized_buf[i] = arr->buf[i];
+        for(int i = 0; i < bytes_data->capacity; i++) {
+            resized_buf[i] = bytes_data->buf[i];
         }
 
         // free old data buf
-        free(arr->buf);
+        free(bytes_data->buf);
 
         // updating new capacity
-        arr->capacity      = arr->capacity * 2;
-        arr->buf           = resized_buf;
-		arr->buf[arr->len] = data;
+        bytes_data->capacity      = bytes_data->capacity * 2;
+        bytes_data->buf           = resized_buf;
+		bytes_data->buf[bytes_data->len] = data;
     }
 
-    arr->len++;
+    bytes_data->len++;
 }
