@@ -159,15 +159,15 @@ void unzip_data(char *file_name){
         for(int i = 0; i < len; i += 4) {
             memcpy(&aux, buf+i, sizeof(tuple));
             if(aux.get_number_chars == 0) {
-                insert(&bytes_data, aux.next_char);
+                insert_bytes(&bytes_data, aux.next_char);
             } else {
                 int ax = bytes_data.len;
                 for(int i = 0; i < aux.get_number_chars; i++) {
-                    insert(&bytes_data, bytes_data.buf[ax-aux.go_back_positions+i]);
+                    insert_bytes(&bytes_data, bytes_data.buf[ax-aux.go_back_positions+i]);
                 }
 
                 if(i+4 < len && aux.get_number_chars > 0)
-                    insert(&bytes_data, aux.next_char);
+                    insert_bytes(&bytes_data, aux.next_char);
             }
         }
 
@@ -198,7 +198,7 @@ void string_remove(char *str, const char *substr) {
 }
 
 
-void insert(decompressed_bytes* bytes_data, char data) {
+void insert_bytes(decompressed_bytes* bytes_data, char data) {
     if(bytes_data->len < bytes_data->capacity) {
         bytes_data->buf[bytes_data->len] = data;
     } else {

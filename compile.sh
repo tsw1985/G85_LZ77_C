@@ -1,8 +1,6 @@
 #!/bin/sh
 make clean
 make
-
-
 ./bin/g85zip
 
 # compresion
