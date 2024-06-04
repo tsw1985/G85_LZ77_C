@@ -3,20 +3,15 @@
 #include <string.h>
 #include "../header/main.h"
 #include "../header/compress.h"
-
-#include <pthread.h>   // Para hilos
-#include <unistd.h>    // Para usleep
+#include <pthread.h>
+#include <unistd.h> 
 
 volatile int STOP_SPINNER = 0;
-
 #define ON 1
 #define OFF 0
-
 #define DEBUG_ZIP 0 //0 unzip
 #define ZIP 0
 #define UNZIP 1
-
-
 
 int main(int argc, char *argv[])
 {
@@ -25,8 +20,7 @@ int main(int argc, char *argv[])
     int ZIP_MODE = UNZIP;
 
     pthread_t spinner_thread;
-
-    // Crear el hilo para la animación de carga
+    // Create thread for animation
     pthread_create(&spinner_thread, NULL, print_loading, NULL);
   
     char *file_name;
@@ -40,17 +34,19 @@ int main(int argc, char *argv[])
 
                 if(ZIP_MODE == ZIP){
 
-
-
                     printf("[ *** INFO *** ] - DEBUG MODE ENABLED\n");
+
+                    //put here a big file to debug.
+
                     char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
-                    //char *file_name_debug = "/home/gabriel/demotext.txt";
                     file_name = (char*)malloc(strlen(file_name_debug) * sizeof(char));
                     strcpy(file_name,file_name_debug);
 
                     FILE* file = print_file_info(file_name);
                     if(NULL != file){
                         start_zip_process(file,file_name);
+
+                        //create thread to show the loading animation
                         pthread_create(&spinner_thread, NULL, print_loading, NULL);
                         STOP_SPINNER = 1;
                         pthread_join(spinner_thread, NULL);
@@ -62,10 +58,11 @@ int main(int argc, char *argv[])
                     printf("[ *** INFO *** ] - DEBUG MODE ENABLED\n");
                     printf("- [ INFO ] - Starting descompression ...\n");
 
-                    char *file_name_debug = "/home/gabriel/FreeDOS.vdi";
-                    //char *file_name_debug = "/home/gabriel/demotext.txt";
+                    //put here your zipped file .g85 to decompress
+                    char *file_name_debug = "/home/gabriel/FreeDOS.vdi.g85";
                     unzip_data(file_name_debug);
 
+                    //create thread to show the loading animation
                     pthread_create(&spinner_thread, NULL, print_loading, NULL);
                     STOP_SPINNER = 1;
                     pthread_join(spinner_thread, NULL);
@@ -83,10 +80,10 @@ int main(int argc, char *argv[])
 
                     if(DEBUG_MODE == ON){
                         printf("- [ DEBUG ] - Starting compression ...\n");
-                        // Crear el hilo para la animación de carga
+                        // create thread to animation
                         pthread_create(&spinner_thread, NULL, print_loading, NULL);
                         start_zip_process(file,file_name);
-                        // Esperar a que el hilo de la animación termine
+                        // when the zip process finish, the animation will be stoped
                         STOP_SPINNER = 1;
                         pthread_join(spinner_thread, NULL);
 
@@ -109,22 +106,19 @@ int main(int argc, char *argv[])
                                 print_head_info();
                                 printf("- [ INFO ] - Starting Descompression ...\n");
                                 unzip_data(file_name);
-                                //pthread_create(&spinner_thread, NULL, print_loading, NULL);
-                                //STOP_SPINNER = 1;
-                                //pthread_join(spinner_thread, NULL);
+                                pthread_create(&spinner_thread, NULL, print_loading, NULL);
+                                STOP_SPINNER = 1;
+                                pthread_join(spinner_thread, NULL);
                                 break;
                             }
                         }
-
                     }
                 }
             }
 
             fclose(file);
-
         }
     }
-
     return 0;
 }
 
@@ -155,11 +149,9 @@ int start_zip_process(FILE* file , char* file_name){
         fwrite(_tuple_array_pointer.tuple_list, sizeof(tuple) * _tuple_array_pointer.size, 1, output_file);
         printf("- [ INFO ] - File ziped on: [ %s ]\n",file_name,".g85");
     }
-    
 
     fclose(output_file);
     free(buffer_data);
-
     return 0;
 }
 

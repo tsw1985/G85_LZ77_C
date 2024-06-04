@@ -121,8 +121,6 @@ void show_tuples_list(tuple_array _tuples_array){
     }
 }
 
-
-
 void unzip_data(char *file_name){
 
     printf("- [ INFO ] - File %s founded ...\n",file_name);
@@ -130,7 +128,6 @@ void unzip_data(char *file_name){
     data_unziped_struct *data_unziped;
     char *new_name_file_to_unzip = (char*)malloc(sizeof(file_name) + 500);
     strcpy(new_name_file_to_unzip, file_name);
-    strcat(new_name_file_to_unzip,".g85");
 
     FILE* file_to_unzip = fopen(new_name_file_to_unzip , "rb");
     if(NULL == file_to_unzip){
@@ -153,7 +150,6 @@ void unzip_data(char *file_name){
         bytes_data.buf       = (char*)malloc(sizeof(char) * search_buf);
         bytes_data.len       = 0;
         bytes_data.capacity  = search_buf;
-
 
         tuple aux;
         for(int i = 0; i < len; i += 4) {
